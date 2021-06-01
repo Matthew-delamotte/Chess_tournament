@@ -48,7 +48,7 @@ Spec Tour/Match:
 - En plus de la liste de correspondance, donner un nom au tour (Round 1, Round 2, ...)
 - Date et heure du début du tour (Automatique en début de tour)
 - Date et heure de la fin du tour (Automatique en fin de tour)
-- Instance du round doivent  être stockées dans une liste sur l'instance du tournoi qui lui correcpond
+- Instance du round doivent être stockées dans une liste sur l'instance du tournoi qui lui correspond
 
 
 Génération des paires:
@@ -103,25 +103,91 @@ il n'est donc pas nécessaire de mettre en place un équilibrage des couleurs.
 --------------------------------------------------------------
 
 """
+from enum import Enum
+from datetime import datetime
+from pprint import pprint
 
-TIMER =
 
 class Player:
-    def __init__(self, name, age, birthday, gender, ranking):
+    def __init__(self, name, birthday, gender):
         self.name = name
-        self.age = age
         self.birthday = birthday
         self.gender = gender
-        self.ranking = ranking
+        self.ranking = 0
+
+    def getAge(self):
+        pass
+
+    # TODO: Méthode lire le ranking d'un joueur, Increase ranking, (Manipulate ranking)
 
 
 class Tournament:
-    def __init__(self, name, place, date, round, players, timer, description):
+    def __init__(self, name, place, players, timer, description, date=datetime.now(), round=4):
         self.name = name
         self.place = place
         self.date = date
         self.round = round
         self.players = players
         self.timer = timer
-        self.decription = description
+        self.description = description
+        self.current_round = 0
+        self.list_round = []
 
+    # TODO: append list_round with instance round
+
+    def get_attributes(self):
+        return {'name': self.name,
+                'place': self.place,
+                'date': self.date,
+                'round': self.round,
+                'players': self.players,
+                'timer': self.timer,
+                'description': self.description,
+                }
+
+class Round:
+    def __init__(self, name, players_list, daytime_start=datetime.now):
+        self.name = name
+        self.players_list = players_list
+        self.start = daytime_start
+
+    def generate_match(self):
+        # Use player list for generate match during the round
+        # Algorithe suisse
+        pass
+
+    # TODO: make player pair, write result for player, write result match, generate next round, update ranking
+    # get daytime of start, get daytime of end
+
+    match = ([player1, Score], [player2, Score])
+    multipe_match = []
+    multipe_match.append(match)
+
+
+
+class Score(Enum):
+    WIN = 0
+    DRAW = 1
+    LOSE = 2
+
+
+class Timer(Enum):
+    BULLET = 0
+    QUICK = 1
+    BLITZ = 2
+
+
+class Gender(Enum):
+    MALE = 0
+    FEMALE = 1
+
+
+player1 = Player('Edd', datetime(1990, 1, 15), Gender.MALE)
+player2 = Player('Matt', datetime(1995, 12, 7), Gender.MALE)
+player3 = Player('Paul', datetime(1995, 5, 25), Gender.MALE)
+list_player = [player1, player2, player3]
+
+
+tournoi = Tournament('name', 'Paris', list_player, Timer.QUICK, "Exemple")
+
+pprint(tournoi.get_attributes())
