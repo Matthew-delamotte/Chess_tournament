@@ -115,13 +115,21 @@ class Player:
         self.gender = gender
         self.ranking = 0
 
-    def getAge(self):
+    def get_age(self):
         pass
 
-    # TODO: Méthode lire le ranking d'un joueur, Increase ranking, (Manipulate ranking)
+    def read_ranking_player(self):
+        pass
+
+    def increase_player_ranking(self):
+        pass
+
+    # (Manipulate ranking)
 
 
 class Tournament:
+    LIST_ROUND = []
+
     def __init__(self, name, place, players, timer, description, date=datetime.now(), round=4):
         self.name = name
         self.place = place
@@ -132,6 +140,9 @@ class Tournament:
         self.description = description
         self.current_round = 0
         self.list_round = []
+
+    def append_list_round(self):
+        pass
 
     # TODO: append list_round with instance round
 
@@ -153,16 +164,38 @@ class Round:
 
     def generate_match(self):
         # Use player list for generate match during the round
-        # Algorithe suisse
         pass
 
-    # TODO: make player pair, write result for player, write result match, generate next round, update ranking
-    # get daytime of start, get daytime of end
+    def make_player_pair(self, algorythime):
+        # swiss_alogorythm():
+        pass
+
+    def update_players_result_in_round(self):
+        pass
+
+    def update_match_result(self):
+        pass
+
+    def generate_next_round(self):
+        pass
+
+    def update_ranking(self):
+        pass
+
+    def get_daytime_of_start(self):
+        pass
+
+    def get_daytime_of_end(self):
+        pass
 
     match = ([player1, Score], [player2, Score])
     multipe_match = []
     multipe_match.append(match)
 
+
+class Algorythme:
+    def swiss_algorythm(self):
+        pass
 
 
 class Score(Enum):
@@ -186,7 +219,6 @@ player1 = Player('Edd', datetime(1990, 1, 15), Gender.MALE)
 player2 = Player('Matt', datetime(1995, 12, 7), Gender.MALE)
 player3 = Player('Paul', datetime(1995, 5, 25), Gender.MALE)
 list_player = [player1, player2, player3]
-
 
 tournoi = Tournament('name', 'Paris', list_player, Timer.QUICK, "Exemple")
 
