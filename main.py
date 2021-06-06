@@ -109,20 +109,30 @@ from pprint import pprint
 
 
 class Player:
-    def __init__(self, name, birthday, gender):
+    def __init__(self, name, born, gender):
         self.name = name
-        self.birthday = birthday
+        self.born = born
         self.gender = gender
         self.ranking = 0
 
-    def get_age(self):
-        pass
+    def get_age(self, today=datetime.now()):
+        born = self.born
+        age = today.year - born.year - ((today.month, today.day) < (born.month, born.day))
+        return age
 
     def read_ranking_player(self):
         pass
 
     def increase_player_ranking(self):
         pass
+
+    def get_attribut(self):
+        return {'name': self.name,
+                'birthday': self.birthday,
+                'gender': self.gender,
+                'ranking': self.ranking
+                }
+
 
     # (Manipulate ranking)
 
@@ -188,12 +198,12 @@ class Round:
     def get_daytime_of_end(self):
         pass
 
-    match = ([player1, Score], [player2, Score])
-    multipe_match = []
-    multipe_match.append(match)
+    # match = ([player1, Score], [player2, Score])
+    # multipe_match = []
+    # multipe_match.append(match)
 
 
-class Algorythme:
+class Algorythm:
     def swiss_algorythm(self):
         pass
 
@@ -215,11 +225,21 @@ class Gender(Enum):
     FEMALE = 1
 
 
-player1 = Player('Edd', datetime(1990, 1, 15), Gender.MALE)
-player2 = Player('Matt', datetime(1995, 12, 7), Gender.MALE)
-player3 = Player('Paul', datetime(1995, 5, 25), Gender.MALE)
-list_player = [player1, player2, player3]
 
-tournoi = Tournament('name', 'Paris', list_player, Timer.QUICK, "Exemple")
+born_year = int(input('Entrer date de naissance(aaaa): '))
+born_month = int(input('(mm): '))
+born_day = int(input('(jj): '))
+birthday = datetime(born_year, born_month, born_day)
 
-pprint(tournoi.get_attributes())
+# pprint(born)
+
+# player1 = Player('Edd', datetime(1995, 6, 28), Gender.MALE)
+player2 = Player('Matt', birthday, Gender.MALE)
+# player3 = Player('Paul', datetime(1995, 5, 25), Gender.MALE)
+# list_player = [player1, player2, player3]
+
+pprint(player2.get_age())
+
+# tournoi = Tournament('name', 'Paris', list_player, Timer.QUICK, "Exemple")
+
+# pprint(tournoi.get_attributes())
