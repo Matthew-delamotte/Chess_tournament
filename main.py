@@ -106,14 +106,15 @@ il n'est donc pas nécessaire de mettre en place un équilibrage des couleurs.
 from enum import Enum
 from datetime import datetime
 from pprint import pprint
+from operator import attrgetter
 
 
 class Player:
-    def __init__(self, name, born, gender):
+    def __init__(self, name, born, gender, rank):
         self.name = name
         self.born = born
         self.gender = gender
-        self.ranking = 0
+        self.ranking = rank
 
     def get_age(self, today=datetime.now()):
         born = self.born
@@ -121,18 +122,18 @@ class Player:
         return age
 
     def read_ranking_player(self):
-        pass
+        return self.ranking
 
     def increase_player_ranking(self):
-        pass
+        self.ranking += 1
+        return self.ranking
 
-    def get_attribut(self):
+    def get_attribute(self):
         return {'name': self.name,
-                'birthday': self.birthday,
+                'birthday': self.born,
                 'gender': self.gender,
-                'ranking': self.ranking
+                'ranking': self.ranking,
                 }
-
 
     # (Manipulate ranking)
 
@@ -176,9 +177,9 @@ class Round:
         # Use player list for generate match during the round
         pass
 
-    def make_player_pair(self, algorythime):
-        # swiss_alogorythm():
-        pass
+    # def make_player_pair(self):
+    #     # swiss_alogorythm():
+    #     pass
 
     def update_players_result_in_round(self):
         pass
@@ -204,7 +205,56 @@ class Round:
 
 
 class Algorythm:
-    def swiss_algorythm(self):
+    def __init__(self, player_list):
+        self.list_player = player_list
+        self.pairs = []
+
+    def sort_player(self, list_player):
+        # Triez tous les joueurs par leurs classement
+        sorted_player = sorted(list_player, key=attrgetter('ranking'))
+        return sorted_player
+
+    def swiss_algorythm(self, sorted_player):
+        # division en 2 groupes: un superieur et un inferieur
+        lenght = len(sorted_player)
+        middle_index = lenght//2
+
+        superior_list = sorted_player[:middle_index]
+        inferior_list = sorted_player[middle_index:]
+
+        for i in inferior_list:
+            pprint("liste inferieur: " + i.name + " rang " + str(i.ranking))
+
+        for i in superior_list:
+            pprint("liste superieur: " + i.name + " rang " + str(i.ranking))
+
+        # Jumelez meilleur joueur des deux moitier superieur et inférieur
+
+        # Jumelez joueur 2 superieur avec joueur 2 inferieur
+        # ect jusqu'a que tout les joueur est été jumelez
+
+        # etape 3
+        # Nouveau tour: triez les joueur par leurs nombre total de point
+        # Si deux joueurs on le meme nombre de points alors triez par leurs ranking
+
+        #  etape 4
+        # Associez le joueur 1 et 2
+        # Associez le joueur 3 et 4
+        # ect
+        # Si un joueur a deja joué avec le meme (exemple 1 et 2), alors l'associez avec joueur 3
+
+        # repetez etape 3 et 4 jusqu'a la fin du tournoi
+
+        # (en plus) tirez au sort qui joue blanc et noir
+        pass
+
+    def pair_first_round(self):
+        sorted_players = self.order_players(self.players)
+        S1count = len(self.list_player) / 2
+        for index in range(S1count):
+            self.pairs.append([sorted_players[index], sorted_players[S1count + index]])
+        if len(self.players) % 2 == 1:
+            self.pairs.append([sorted_players[S1count * 2 + 1], None])
         pass
 
 
@@ -225,20 +275,34 @@ class Gender(Enum):
     FEMALE = 1
 
 
+# class View:
+#     born_year = int(input('Entrer date de naissance(aaaa): '))
+#     born_month = int(input('(mm): '))
+#     born_day = int(input('(jj): '))
+#     birthday = datetime(born_year, born_month, born_day)
+#     player2 = Player('Matt', birthday, Gender.MALE)
+#     pprint(player2.get_age())
+#     pprint(player2.get_attribut())
+    
 
-born_year = int(input('Entrer date de naissance(aaaa): '))
-born_month = int(input('(mm): '))
-born_day = int(input('(jj): '))
-birthday = datetime(born_year, born_month, born_day)
+player1 = Player('Edd', datetime(1995, 6, 28), Gender.MALE, 2)
+player2 = Player('Matt', datetime(1995, 12, 7), Gender.MALE, 1)
+player3 = Player('Paul', datetime(1995, 5, 25), Gender.MALE, 3)
+player4 = Player('Thony', datetime(1995, 8, 9), Gender.MALE, 4)
+player5 = Player('Seb', datetime(1983, 2, 5), Gender.MALE, 5)
+player6 = Player('Joddie', datetime(2000, 5, 6), Gender.FEMALE, 6)
+player7 = Player('Manon', datetime(1995, 6, 28), Gender.MALE, 7)
+player8 = Player('Cécile', datetime(1978, 6, 15), Gender.FEMALE, 8)
+list_player = [player1, player2, player3, player4, player5, player6, player7, player8]
 
-# pprint(born)
+algo = Algorythm(list_player)
+algo.swiss_algorythm(list_player)
 
-# player1 = Player('Edd', datetime(1995, 6, 28), Gender.MALE)
-player2 = Player('Matt', birthday, Gender.MALE)
-# player3 = Player('Paul', datetime(1995, 5, 25), Gender.MALE)
-# list_player = [player1, player2, player3]
+# for player in list_player:
+#     pprint(player.ranking)
 
-pprint(player2.get_age())
+# pprint(player2.get_age())
+# pprint(player2.get_attribut())
 
 # tournoi = Tournament('name', 'Paris', list_player, Timer.QUICK, "Exemple")
 
