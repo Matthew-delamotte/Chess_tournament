@@ -209,15 +209,18 @@ class Algorythm:
         self.list_player = player_list
         self.pairs = []
 
-    def sort_player(self, list_player):
+    def sort_player(self):
         # Triez tous les joueurs par leurs classement
-        sorted_player = sorted(list_player, key=attrgetter('ranking'))
+        sorted_player = sorted(self.list_player, key=attrgetter('ranking'))
         return sorted_player
 
-    def swiss_algorythm(self, sorted_player):
+    def swiss_algorythm(self):
+        sorted_player = self.sort_player()
+        for i in sorted_player:
+            print(i.name + str(i.ranking))
         # division en 2 groupes: un superieur et un inferieur
-        lenght = len(sorted_player)
-        middle_index = lenght//2
+        length = len(sorted_player)
+        middle_index = length//2
 
         superior_list = sorted_player[:middle_index]
         inferior_list = sorted_player[middle_index:]
@@ -296,7 +299,7 @@ player8 = Player('Cécile', datetime(1978, 6, 15), Gender.FEMALE, 8)
 list_player = [player1, player2, player3, player4, player5, player6, player7, player8]
 
 algo = Algorythm(list_player)
-algo.swiss_algorythm(list_player)
+algo.swiss_algorythm()
 
 # for player in list_player:
 #     pprint(player.ranking)
