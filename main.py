@@ -110,12 +110,12 @@ from operator import attrgetter
 
 
 class Player:
-    def __init__(self, name, birthday, gender, rank, score):
+    def __init__(self, name, birthday, gender, rank):
         self.name = name
         self.birthday = birthday
         self.gender = gender
         self.ranking = rank
-        self.score = score
+        self.score = 0
 
     def get_age(self):
         return int((datetime.now() - self.birthday).days/365.25)
@@ -126,12 +126,29 @@ class Player:
     #     age = today.year - birthday.year - ((today.month, today.day) < (birthday.month, birthday.day))
     #     return age
 
-    def read_ranking_player(self):
+    def get_ranking(self):
         return self.ranking
 
-    def increase_player_ranking(self):
-        self.ranking += 1
+    def update_ranking(self):
         return self.ranking
+
+    def update_score(self, result):
+        # while self.valid_result:
+        # point_to_add = 0
+        # result = input("Enter result: ")
+        if result == 'win':
+            self.score += 1
+            pprint('+1 points added')
+        elif result == 'draw':
+            self.score += 0.5
+            pprint('+0.5 points added')
+        elif result == 'lose':
+            pprint('No point added')
+        else:
+            raise Exception("Sorry, enter valid result")
+
+    def reset_score(self):
+        pass
 
     def get_attribute(self):
         return {'name': self.name,
@@ -159,6 +176,11 @@ class Tournament:
 
     def append_list_round(self):
         pass
+
+    def instance_round(self, pair_match):
+        # instancier un round
+        # append le round dans le list_round
+        return
 
     # TODO: append list_round with instance round
 
@@ -225,7 +247,7 @@ class Algorythm:
         inferior_list = sorted_player[middle_index:]
         return superior_list, inferior_list
 
-    def make_pairs_round(self):
+    def generate_pair(self):
         # Jumelez meilleur joueur des deux moitier superieur et inférieur
         superior_list, inferior_list = self.list_division()
         match_list = list(zip(superior_list, inferior_list))
@@ -262,35 +284,35 @@ class Algorythm:
         pass
 
 
-class Score:
-    # WIN = 0
-    # DRAW = 1
-    # LOSE = 2
-    def __init__(self, score):
-        self.score = score
-        self.valid_result = True
-
-    def ask_result(self):
-        while self.valid_result:
-            # point_to_add = 0
-            result = input("Enter result: ")
-            if result == 'win':
-                self.score = self.score + 1
-                self.valid_result = False
-                pprint('+1 points added')
-            if result == 'draw':
-                self.score = self.score + 0.5
-                self.valid_result = False
-                pprint('+0.5 points added')
-            if result == 'lose':
-                pprint('No point added')
-                self.valid_result = False
-            else:
-                pprint('Enter valid result (win, draw or lose)')
-
-    def get_score(self):
-        pprint(self.score)
-        return
+# class Score:
+#     # WIN = 0
+#     # DRAW = 1
+#     # LOSE = 2
+#     def __init__(self, score):
+#         self.score = score
+#         self.valid_result = True
+#
+#     def ask_result(self):
+#         while self.valid_result:
+#             # point_to_add = 0
+#             result = input("Enter result: ")
+#             if result == 'win':
+#                 self.score = self.score + 1
+#                 self.valid_result = False
+#                 pprint('+1 points added')
+#             elif result == 'draw':
+#                 self.score = self.score + 0.5
+#                 self.valid_result = False
+#                 pprint('+0.5 points added')
+#             elif result == 'lose':
+#                 pprint('No point added')
+#                 self.valid_result = False
+#             else:
+#                 pprint('Enter valid result (win, draw or lose)')
+#
+#     def get_score(self):
+#         pprint(self.score)
+#         return
 
 
 class Timer(Enum):
@@ -314,24 +336,21 @@ class Gender(Enum):
 #     pprint(player2.get_attribut())
 
 def make_player_list():
-    player1 = Player('Edd', datetime(1995, 6, 28), Gender.MALE, 2, 0)
-    player2 = Player('Matt', datetime(1995, 12, 7), Gender.MALE, 1, 0)
-    player3 = Player('Paul', datetime(1995, 5, 25), Gender.MALE, 3, 0)
-    player4 = Player('Thony', datetime(1995, 8, 9), Gender.MALE, 4, 0)
-    player5 = Player('Seb', datetime(1983, 2, 5), Gender.MALE, 5, 0)
-    player6 = Player('Joddie', datetime(1998, 2, 6), Gender.FEMALE, 6, 0)
-    player7 = Player('Manon', datetime(1995, 6, 28), Gender.MALE, 7, 0)
-    player8 = Player('Cécile', datetime(1978, 6, 15), Gender.FEMALE, 8, 0)
+    player1 = Player('Edd', datetime(1995, 6, 28), Gender.MALE, 2)
+    player2 = Player('Matt', datetime(1995, 12, 7), Gender.MALE, 1)
+    player3 = Player('Paul', datetime(1995, 5, 25), Gender.MALE, 3)
+    player4 = Player('Thony', datetime(1995, 8, 9), Gender.MALE, 4)
+    player5 = Player('Seb', datetime(1983, 2, 5), Gender.MALE, 5)
+    player6 = Player('Joddie', datetime(1998, 2, 6), Gender.FEMALE, 6)
+    player7 = Player('Manon', datetime(1995, 6, 28), Gender.MALE, 7)
+    player8 = Player('Cécile', datetime(1978, 6, 15), Gender.FEMALE, 8)
     list_player = [player1, player2, player3, player4, player5, player6, player7, player8]
     return list_player
 
-player1 = Player('Edd', datetime(1995, 6, 28), Gender.MALE, 2, 0)
-pprint(player1.get_age())
 
 # def change_attribute(Attribute, value):
 #     "In this function I can not access car.color directly"
 #     Attribute.score = value
-
 
 # def increase_score():
 #     for player in make_player_list():
@@ -340,15 +359,10 @@ pprint(player1.get_age())
 #             pprint(i.score)
 #     return
 
-
 # score = Score(0)
-
-# en cours
-# init = make_player_list()
-# for i in init:
-#     score = Score(i.score)
-#     score.ask_result()
-#     pprint(score.get_score())
+list_player = make_player_list()
+algo = Algorythm(list_player)
+pprint(algo.generate_pair())
 
 
 # algo = Algorythm(make_player_list())
