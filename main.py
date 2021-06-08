@@ -110,17 +110,21 @@ from operator import attrgetter
 
 
 class Player:
-    def __init__(self, name, born, gender, rank, score):
+    def __init__(self, name, birthday, gender, rank, score):
         self.name = name
-        self.born = born
+        self.birthday = birthday
         self.gender = gender
         self.ranking = rank
         self.score = score
 
-    def get_age(self, today=datetime.now()):
-        born = self.born
-        age = today.year - born.year - ((today.month, today.day) < (born.month, born.day))
-        return age
+    def get_age(self):
+        return int((datetime.now() - self.birthday).days/365.25)
+
+    # Autre methode pour get_age
+    # def get_age(self, today=datetime.now()):
+    #     birthday = self.birthday
+    #     age = today.year - birthday.year - ((today.month, today.day) < (birthday.month, birthday.day))
+    #     return age
 
     def read_ranking_player(self):
         return self.ranking
@@ -131,7 +135,7 @@ class Player:
 
     def get_attribute(self):
         return {'name': self.name,
-                'birthday': self.born,
+                'birthday': self.birthday,
                 'gender': self.gender,
                 'ranking': self.ranking,
                 }
@@ -258,8 +262,6 @@ class Algorythm:
         pass
 
 
-
-
 class Score:
     # WIN = 0
     # DRAW = 1
@@ -289,7 +291,6 @@ class Score:
     def get_score(self):
         pprint(self.score)
         return
-
 
 
 class Timer(Enum):
@@ -324,9 +325,12 @@ def make_player_list():
     list_player = [player1, player2, player3, player4, player5, player6, player7, player8]
     return list_player
 
-def change_attribute(Attribute, value):
-    "In this function I can not access car.color directly"
-    Attribute.score = value
+player1 = Player('Edd', datetime(1995, 6, 28), Gender.MALE, 2, 0)
+pprint(player1.get_age())
+
+# def change_attribute(Attribute, value):
+#     "In this function I can not access car.color directly"
+#     Attribute.score = value
 
 
 # def increase_score():
@@ -338,11 +342,13 @@ def change_attribute(Attribute, value):
 
 
 # score = Score(0)
-init = make_player_list()
-for i in init:
-    score = Score(i.score)
-    score.ask_result()
-    pprint(score.get_score())
+
+# en cours
+# init = make_player_list()
+# for i in init:
+#     score = Score(i.score)
+#     score.ask_result()
+#     pprint(score.get_score())
 
 
 # algo = Algorythm(make_player_list())
