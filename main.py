@@ -110,11 +110,12 @@ from operator import attrgetter
 
 
 class Player:
-    def __init__(self, name, born, gender, rank):
+    def __init__(self, name, born, gender, rank, score):
         self.name = name
         self.born = born
         self.gender = gender
         self.ranking = rank
+        self.score = score
 
     def get_age(self, today=datetime.now()):
         born = self.born
@@ -177,10 +178,6 @@ class Round:
         # Use player list for generate match during the round
         pass
 
-    # def make_player_pair(self):
-    #     # swiss_alogorythm():
-    #     pass
-
     def update_players_result_in_round(self):
         pass
 
@@ -214,27 +211,36 @@ class Algorythm:
         sorted_player = sorted(self.list_player, key=attrgetter('ranking'))
         return sorted_player
 
-    def swiss_algorythm(self):
-        sorted_player = self.sort_player()
-        for i in sorted_player:
-            print(i.name + str(i.ranking))
+    def list_division(self):
         # division en 2 groupes: un superieur et un inferieur
+        sorted_player = self.sort_player()
         length = len(sorted_player)
-        middle_index = length//2
+        middle_index = length // 2
 
         superior_list = sorted_player[:middle_index]
         inferior_list = sorted_player[middle_index:]
+        return superior_list, inferior_list
 
-        for i in inferior_list:
-            pprint("liste inferieur: " + i.name + " rang " + str(i.ranking))
+    def make_pairs_round(self):
+        # Jumelez meilleur joueur des deux moitier superieur et inférieur
+        superior_list, inferior_list = self.list_division()
+        match_list = list(zip(superior_list, inferior_list))
+        return match_list
+        # count = 1
+        # for round in a:
+        #     pprint("New round " + str(count))
+        #     count += 1
+        #
+        # return round
 
-        for i in superior_list:
-            pprint("liste superieur: " + i.name + " rang " + str(i.ranking))
+    def start_algorythm(self):
+        # Triez tous les joueurs par leurs classement
+        # division en 2 groupes: un superieur et un inferieur
 
         # Jumelez meilleur joueur des deux moitier superieur et inférieur
-
         # Jumelez joueur 2 superieur avec joueur 2 inferieur
         # ect jusqu'a que tout les joueur est été jumelez
+        # pprint(self.make_pairs_round())
 
         # etape 3
         # Nouveau tour: triez les joueur par leurs nombre total de point
@@ -251,20 +257,39 @@ class Algorythm:
         # (en plus) tirez au sort qui joue blanc et noir
         pass
 
-    def pair_first_round(self):
-        sorted_players = self.order_players(self.players)
-        S1count = len(self.list_player) / 2
-        for index in range(S1count):
-            self.pairs.append([sorted_players[index], sorted_players[S1count + index]])
-        if len(self.players) % 2 == 1:
-            self.pairs.append([sorted_players[S1count * 2 + 1], None])
-        pass
 
 
-class Score(Enum):
-    WIN = 0
-    DRAW = 1
-    LOSE = 2
+
+class Score:
+    # WIN = 0
+    # DRAW = 1
+    # LOSE = 2
+    def __init__(self, score):
+        self.score = score
+        self.valid_result = True
+
+    def ask_result(self):
+        while self.valid_result:
+            # point_to_add = 0
+            result = input("Enter result: ")
+            if result == 'win':
+                self.score = self.score + 1
+                self.valid_result = False
+                pprint('+1 points added')
+            if result == 'draw':
+                self.score = self.score + 0.5
+                self.valid_result = False
+                pprint('+0.5 points added')
+            if result == 'lose':
+                pprint('No point added')
+                self.valid_result = False
+            else:
+                pprint('Enter valid result (win, draw or lose)')
+
+    def get_score(self):
+        pprint(self.score)
+        return
+
 
 
 class Timer(Enum):
@@ -278,7 +303,7 @@ class Gender(Enum):
     FEMALE = 1
 
 
-# class View:
+# class main:
 #     born_year = int(input('Entrer date de naissance(aaaa): '))
 #     born_month = int(input('(mm): '))
 #     born_day = int(input('(jj): '))
@@ -286,20 +311,43 @@ class Gender(Enum):
 #     player2 = Player('Matt', birthday, Gender.MALE)
 #     pprint(player2.get_age())
 #     pprint(player2.get_attribut())
-    
 
-player1 = Player('Edd', datetime(1995, 6, 28), Gender.MALE, 2)
-player2 = Player('Matt', datetime(1995, 12, 7), Gender.MALE, 1)
-player3 = Player('Paul', datetime(1995, 5, 25), Gender.MALE, 3)
-player4 = Player('Thony', datetime(1995, 8, 9), Gender.MALE, 4)
-player5 = Player('Seb', datetime(1983, 2, 5), Gender.MALE, 5)
-player6 = Player('Joddie', datetime(2000, 5, 6), Gender.FEMALE, 6)
-player7 = Player('Manon', datetime(1995, 6, 28), Gender.MALE, 7)
-player8 = Player('Cécile', datetime(1978, 6, 15), Gender.FEMALE, 8)
-list_player = [player1, player2, player3, player4, player5, player6, player7, player8]
+def make_player_list():
+    player1 = Player('Edd', datetime(1995, 6, 28), Gender.MALE, 2, 0)
+    player2 = Player('Matt', datetime(1995, 12, 7), Gender.MALE, 1, 0)
+    player3 = Player('Paul', datetime(1995, 5, 25), Gender.MALE, 3, 0)
+    player4 = Player('Thony', datetime(1995, 8, 9), Gender.MALE, 4, 0)
+    player5 = Player('Seb', datetime(1983, 2, 5), Gender.MALE, 5, 0)
+    player6 = Player('Joddie', datetime(1998, 2, 6), Gender.FEMALE, 6, 0)
+    player7 = Player('Manon', datetime(1995, 6, 28), Gender.MALE, 7, 0)
+    player8 = Player('Cécile', datetime(1978, 6, 15), Gender.FEMALE, 8, 0)
+    list_player = [player1, player2, player3, player4, player5, player6, player7, player8]
+    return list_player
 
-algo = Algorythm(list_player)
-algo.swiss_algorythm()
+def change_attribute(Attribute, value):
+    "In this function I can not access car.color directly"
+    Attribute.score = value
+
+
+# def increase_score():
+#     for player in make_player_list():
+#         if player.score == 0:
+#             change_attribute(i, )
+#             pprint(i.score)
+#     return
+
+
+# score = Score(0)
+init = make_player_list()
+for i in init:
+    score = Score(i.score)
+    score.ask_result()
+    pprint(score.get_score())
+
+
+# algo = Algorythm(make_player_list())
+# pprint(increase_score())
+
 
 # for player in list_player:
 #     pprint(player.ranking)
