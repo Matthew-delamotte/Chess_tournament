@@ -3,14 +3,159 @@ from datetime import datetime
 from pprint import pprint
 from operator import attrgetter
 
-class View:
-    def ask_birthday(self):
+from models import Gender
+
+
+class ShowView:
+    @classmethod
+    def show_create_tournament(cls):
+        tournament = CreationView.create_tournament()
+        pprint('Nom du tournois: ' + tournament[0])
+        pprint('Lieux: ' + tournament[1])
+        pprint('Date de début: ' + tournament[2])
+        pprint('Vitesse de jeu: ' + tournament[3])
+        pprint('Description: ' + tournament[4])
+
+    @classmethod
+    def show_new_player(cls):
+        new_player = CreationView.create_player()
+        print()
+        pprint('Nom: ' + new_player[0])
+        pprint('Date de naissance: ' + str(new_player[1]))
+        pprint('Genre: ' + new_player[2])
+        AskView.ask_create_player()
+
+
+    @classmethod
+    def show_menu(cls):
+        pprint("Bienvenue sur le programme de tournois d'échecs.")
+        print()
+        pprint("Que voulez vous faire?")
+        pprint("[1] ..Créer un tournois..")
+        pprint("[2] ..Continuez un tournois..")
+        pprint("[3] ..Ajoutez des joueur..")
+        choice = input()
+        print()
+        return choice
+
+
+class CreationView:
+    @classmethod
+    def create_player(cls):
+        print("Création d'un joueur")
+        print()
+        name = AskView.ask_name()
+        gender = AskView.ask_gender()
+        birthday = AskView.ask_birthday()
+        new_player = (name, birthday, gender)
+        return new_player
+
+    @classmethod
+    def create_tournament(cls):
+        pprint("Création du tournoi")
+        name = input("Entrer nom: ")
+        place = input("Entrer l'endroit: ")
+
+        date_start = cls.take_time()
+
+        timer = AskView.ask_timer()
+
+        description = input("Entrez une description: ")
+        tournament_init = (name, place, date_start, timer, description)
+        return tournament_init
+
+    @classmethod
+    def take_time(cls):
+        now = datetime.now()  # current date and time
+
+        date_time = now.strftime("%m/%d/%Y, %H:%M:%S")
+        return date_time
+
+class AskView:
+    @classmethod
+    def ask_create_player(cls):
+        valid_result = True
+        while valid_result:
+            choice = input("Ajouter des nouveau joueurs? (y ou n)")
+            if choice == 'y':
+                ShowView.show_new_player()
+                valid_result = False
+            elif choice == 'n':
+                ShowView.show_menu()
+            else:
+                pprint('Enter valid value (y/n)')
+        return choice
+
+    @classmethod
+    def ask_name(cls):
+        last_name = input("Entrez nom: ")
+        first_name = input("Entrez prénom: ")
+        name = first_name + " " + last_name
+        return name
+
+    @classmethod
+    def ask_gender(cls):
+        valid_result = True
+        while valid_result:
+            gender = input("Entrez le sexe (h ou f): ")
+            if gender == 'h':
+                gender = 'Homme'
+                valid_result = False
+            elif gender == 'f':
+                gender = "Femme"
+                valid_result = False
+            else:
+                pprint('Enter valid result')
+        return gender
+
+    @classmethod
+    def ask_birthday(cls):
         born_year = int(input('Entrer date de naissance(aaaa): '))
         born_month = int(input('(mm): '))
         born_day = int(input('(jj): '))
         birthday = datetime(born_year, born_month, born_day)
-        player2 = Player('Matt', birthday, Gender.MALE)
-        pprint(player2.get_age())
+        return birthday
 
-    def create_player(self):
+
+    @classmethod
+    def ask_timer(cls):
+        valid_result = True
+        while valid_result:
+            timer = input("Choissisez le type de temps (bullet, biltz ou rapide): ")
+            if timer == "bullet":
+                timer = "BULLET"
+                valid_result = False
+            elif timer == "blitz":
+                timer = "BLITZ"
+                valid_result = False
+            elif timer == "rapide":
+                timer = "QUICK"
+                valid_result = False
+            else:
+                pprint("Entrer valeur valide")
+        return timer
+
+    def show_ranking(self):
         pass
+
+    def show_match(self):
+        pass
+
+    # @classmethod
+    # def enter_match_result(cls):
+    #     # while self.valid_result:
+    #     # point_to_add = 0
+    #     result = input("Enter result: ")
+    #     if result == 'win':
+    #         self.score += 1
+    #         pprint('+1 points added')
+    #     elif result == 'draw':
+    #         self.score += 0.5
+    #         pprint('+0.5 points added')
+    #     elif result == 'lose':
+    #         pprint('No point added')
+    #     else:
+    #         raise Exception("Sorry, enter valid result")
+
+
+# pprint(AskView.ask_create_player())

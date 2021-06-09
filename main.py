@@ -1,4 +1,3 @@
-
 """
 Etape:
 1: Creation du tournoi
@@ -103,10 +102,6 @@ il n'est donc pas nécessaire de mettre en place un équilibrage des couleurs.
 --------------------------------------------------------------
 
 """
-from enum import Enum
-from datetime import datetime
-from pprint import pprint
-from operator import attrgetter
 
 # def change_attribute(Attribute, value):
 #     "In this function I can not access car.color directly"
@@ -138,3 +133,16 @@ from operator import attrgetter
 # tournoi = Tournament('name', 'Paris', list_player, Timer.QUICK, "Exemple")
 
 # pprint(tournoi.get_attributes())
+
+from enum import Enum
+from datetime import datetime
+from pprint import pprint
+from operator import attrgetter
+
+
+def main():
+    pass
+
+
+if __name__ == "__main__":
+    main()
