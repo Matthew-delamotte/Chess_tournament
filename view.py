@@ -46,7 +46,8 @@ class CreationView:
         name = AskView.ask_name()
         gender = AskView.ask_gender()
         birthday = AskView.ask_birthday()
-        new_player = (name, birthday, gender)
+        rank = AskView.ask_rank()
+        new_player = (name, birthday, gender, rank)
         return new_player
 
     @classmethod
@@ -115,6 +116,10 @@ class AskView:
         birthday = datetime(born_year, born_month, born_day)
         return birthday
 
+    @classmethod
+    def ask_rank(cls):
+        rank = input("Entrer le classement: ")
+        return rank
 
     @classmethod
     def ask_timer(cls):

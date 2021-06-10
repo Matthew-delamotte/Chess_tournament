@@ -11,7 +11,7 @@ class Player:
         self.name = name
         self.birthday = birthday
         self.gender = gender
-        self.ranking = rank
+        self.rank = rank
         self.score = 0
 
     def get_age(self):
@@ -55,14 +55,14 @@ class Tournament:
         self.player_dict = player_dict
         self.list_round = []
 
+    def append_list_round(self):
+        match = Round()
+        self.list_round.append(match.generate_match())
+
     def instance_round(self, pair_match):
         # instancier un round
         # append le round dans le list_round
         return
-
-    def append_list_round(self):
-        match = Round()
-        self.list_round.append(match.generate_match())
 
     # TODO: append list_round with instance round
 

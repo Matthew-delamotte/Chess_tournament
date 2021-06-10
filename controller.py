@@ -46,15 +46,19 @@ class Control:
 
     @classmethod
     def run_tournament(cls):
-        print("Création du tournoi...")
-        tournament_init = CreationView.create_tournament()
-        tournament = Tournament(tournament_init[0],
-                                tournament_init[1],
-                                tournament_init[2],
-                                tournament_init[3],
-                                tournament_init[4],
-                                cls.append_player_to_tournament()
-                                )
+        # print("Création du tournoi...")
+        # tournament_init = CreationView.create_tournament()
+        # tournament = Tournament(tournament_init[0],
+        #                         tournament_init[1],
+        #                         tournament_init[2],
+        #                         tournament_init[3],
+        #                         tournament_init[4],
+        #                         cls.append_player_to_tournament()
+        #                         )
+
+        tournament = Tournament('Nom', 'Lieux', 'date', 'Timer', 'I am description', cls.make_player_list())
+
+
 
         # round_match = Round(cls.make_player_list())
         # match = round_match.generate_match()
@@ -67,9 +71,14 @@ class Control:
     @classmethod
     def append_player_to_tournament(cls):
         player_dict = {}
-        for p in range(2):
+        for p in range(1):
             print(f'Ajoutez joueur {p + 1}:')
-            player_dict[f'Player{p + 1}'] = CreationView.create_player()
+            player = CreationView.create_player()
+            player_dict[f'Player{p + 1}'] = Player(player[0],
+                                                   player[1],
+                                                   player[2],
+                                                   player[3],
+                                                   )
         return player_dict
 
 
