@@ -3,7 +3,6 @@ from datetime import datetime
 from pprint import pprint
 from operator import attrgetter
 
-from models import Gender
 
 
 class ShowView:
@@ -52,7 +51,7 @@ class CreationView:
 
     @classmethod
     def create_tournament(cls):
-        pprint("Création du tournoi")
+        pprint("Paramétre du tournoi: ")
         name = input("Entrer nom: ")
         place = input("Entrer l'endroit: ")
 
@@ -134,6 +133,10 @@ class AskView:
             else:
                 pprint("Entrer valeur valide")
         return timer
+
+    @classmethod
+    def ask_player_for_tournament(cls):
+        pass
 
     def show_ranking(self):
         pass

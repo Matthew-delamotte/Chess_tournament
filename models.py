@@ -3,7 +3,7 @@ from datetime import datetime
 from pprint import pprint
 from operator import attrgetter
 
-# from controller import control
+# from controller import Control
 
 
 class Player:
@@ -44,17 +44,15 @@ class Player:
 
 class Tournament:
     LIST_ROUND = []
-
-    def __init__(self):
-        # def __init__(self, name, place, players, timer, description, date=datetime.now(), round=4):
-        # self.name = name
-        # self.place = place
-        # self.date = date
-        # self.round = round
-        # self.players = players
-        # self.timer = timer
-        # self.description = description
-        # self.current_round = 0
+    def __init__(self, name, place, date, timer, description, player_dict):
+        self.name = name
+        self.place = place
+        self.date_start = date
+        self.round = 4
+        self.timer = timer
+        self.description = description
+        self.current_round = 0
+        self.player_dict = player_dict
         self.list_round = []
 
     def instance_round(self, pair_match):
@@ -63,7 +61,7 @@ class Tournament:
         return
 
     def append_list_round(self):
-        match = Round(make_player_list())
+        match = Round()
         self.list_round.append(match.generate_match())
 
     # TODO: append list_round with instance round
@@ -71,9 +69,10 @@ class Tournament:
     def get_attributes(self):
         return {'name': self.name,
                 'place': self.place,
-                'date': self.date,
-                'round': self.round,
-                'players': self.players,
+                'date de début': self.date_start,
+                'nb de round': self.round,
+                'round actuelle': self.current_round,
+                'players': self.player_dict,
                 'timer': self.timer,
                 'description': self.description,
                 }
@@ -167,22 +166,17 @@ class Round:
 #     BLITZ = 2
 
 
-class Gender(Enum):
-    MALE = 0
-    FEMALE = 1
-
-
-def make_player_list():
-    player1 = Player('Edd', datetime(1995, 6, 28), Gender.MALE, 2)
-    player2 = Player('Matt', datetime(1995, 12, 7), Gender.MALE, 1)
-    player3 = Player('Paul', datetime(1995, 5, 25), Gender.MALE, 3)
-    player4 = Player('Thony', datetime(1995, 8, 9), Gender.MALE, 4)
-    player5 = Player('Seb', datetime(1983, 2, 5), Gender.MALE, 5)
-    player6 = Player('Joddie', datetime(1998, 2, 6), Gender.FEMALE, 6)
-    player7 = Player('Manon', datetime(1995, 6, 28), Gender.MALE, 7)
-    player8 = Player('Cécile', datetime(1978, 6, 15), Gender.FEMALE, 8)
-    list_player = [player1, player2, player3, player4, player5, player6, player7, player8]
-    return list_player
+# def make_player_list():
+#     player1 = Player('Edd', datetime(1995, 6, 28), Gender.MALE, 2)
+#     player2 = Player('Matt', datetime(1995, 12, 7), Gender.MALE, 1)
+#     player3 = Player('Paul', datetime(1995, 5, 25), Gender.MALE, 3)
+#     player4 = Player('Thony', datetime(1995, 8, 9), Gender.MALE, 4)
+#     player5 = Player('Seb', datetime(1983, 2, 5), Gender.MALE, 5)
+#     player6 = Player('Joddie', datetime(1998, 2, 6), Gender.FEMALE, 6)
+#     player7 = Player('Manon', datetime(1995, 6, 28), Gender.MALE, 7)
+#     player8 = Player('Cécile', datetime(1978, 6, 15), Gender.FEMALE, 8)
+#     list_player = [player1, player2, player3, player4, player5, player6, player7, player8]
+#     return list_player
 
 # test = Round(make_player_list())
 # i = test.generate_match()
