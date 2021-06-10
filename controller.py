@@ -57,16 +57,23 @@ class Control:
         #                         )
 
         tournament = Tournament('Nom', 'Lieux', 'date', 'Timer', 'I am description', cls.make_player_list())
+        round_match = Round(tournament.player_dict)
+        matchs = round_match.generate_match()
 
+       # for nb of round in tournament
+            # Ask result for all matchs
+            # Update score
 
+            # Verify score player
+            # if score p1 == score p2 else sort by rank
 
-        # round_match = Round(cls.make_player_list())
-        # match = round_match.generate_match()
-        # pprint(match)
-        # print("Création du tournoi...")
-        # tournament = Tournament()
-        # print("Génération des pair des matchs...")
-        # print()
+            # Associate best player with second player ect...
+            # if p1 already play with p2, then match with p3
+
+        # Show score
+        # Update_ranking
+        # Show new ranking
+        # End
 
     @classmethod
     def append_player_to_tournament(cls):

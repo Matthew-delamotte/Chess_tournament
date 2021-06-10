@@ -86,7 +86,7 @@ class Round:
 
     def sort_player_by_ranking(self):
         # Triez tous les joueurs par leurs classement
-        sorted_player = sorted(self.players_list, key=attrgetter('ranking'))
+        sorted_player = sorted(self.players_list, key=attrgetter('rank'))
         return sorted_player
 
     def sort_player_by_score(self):
