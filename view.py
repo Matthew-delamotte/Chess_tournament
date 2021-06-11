@@ -165,8 +165,23 @@ class AskView:
         result_list = []
         for i in range(len(matchs_list)):
             print()
-            result = input(f"Entrer resultat match {i + 1}: ")
-            result_list.append(result)
+            valid_result = True
+            while valid_result:
+                result = input(f"Entrer resultat match {i + 1}: ")
+                if result == '1':
+                    result_list.append(result)
+                    valid_result = False
+                elif result == '2':
+                    result_list.append(result)
+                    valid_result = False
+                elif result == '0':
+                    result_list.append(result)
+                    valid_result = False
+                else:
+                    pprint("Entrer un valeur valide: (1, 2 ou 0)")
+
+        return result_list
+
 
         return result_list
 
@@ -174,17 +189,35 @@ class AskView:
     def update_score(cls, tournament, matchs_list):
         result_list = cls.enter_match_result(tournament, matchs_list)
         pprint(result_list)
-        for match in matchs_list:
-            for player in match:
-                x = player.
-                if result == '1':
-                    pprint(f'Joueur 1: {x[0].name}')
+        p = 0
+        for result in result_list:
+            pprint(result)
+            match = matchs_list[p]
+            players_of_match = match
+            players = players_of_match
+            player1 = players[0]
+            player2 = players[1]
+            p += 1
+            if result == '1':
+                pprint(f'Joueur {player1.name} gagne, score +1 point.')
+                player1.score += 1
+                pprint('Verification')
+                pprint(player1.score)
+                pprint(player2.score)
+            elif result == '2':
+                pprint(f'Joueur {player2.name} gagne, score +1 point.')
+                player2.score += 1
+                pprint('Verification')
+                pprint(player1.score)
+                pprint(player2.score)
+            elif result == '0':
+                pprint(f'Joueur {player1.name} et {player2.name} sont égalité, score +0.5 point.')
+                player1.score += 0.5
+                player2.score += 0.5
+                pprint('Verification')
+                pprint(player1.score)
+                pprint(player2.score)
 
-                    #  Reprendre le code ici! ==========================================================
-                    # Revoir la fonction update score
-
-
-                    
                     # pprint(x[0].name + " :J1:-- vs --:J2: " + x[1].name)
             # while self.valid_result:
             #     point_to_add = 0
