@@ -42,7 +42,7 @@ class ShowView:
         for match in range(tournament.round):
             print(f'Match n* {match + 1}')
             x = matchs_list[match]
-            pprint(x[0].name + " ::-- vs --:: " + x[1].name)
+            pprint(x[0].name + " :J1:-- vs --:J2: " + x[1].name)
 
 
 
@@ -158,13 +158,34 @@ class AskView:
         pass
 
     @classmethod
-    def enter_match_result(cls,tournament, match_list):
+    def enter_match_result(cls, tournament, matchs_list):
         print()
         pprint("Fin du round")
         pprint("Saisie des resultat")
-        for i in range(len(match_list)):
+        result_list = []
+        for i in range(len(matchs_list)):
             print()
             result = input(f"Entrer resultat match {i + 1}: ")
+            result_list.append(result)
+
+        return result_list
+
+    @classmethod
+    def update_score(cls, tournament, matchs_list):
+        result_list = cls.enter_match_result(tournament, matchs_list)
+        pprint(result_list)
+        for match in matchs_list:
+            for player in match:
+                x = player.
+                if result == '1':
+                    pprint(f'Joueur 1: {x[0].name}')
+
+                    #  Reprendre le code ici! ==========================================================
+                    # Revoir la fonction update score
+
+
+                    
+                    # pprint(x[0].name + " :J1:-- vs --:J2: " + x[1].name)
             # while self.valid_result:
             #     point_to_add = 0
             #     result = input("Enter result: ")

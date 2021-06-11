@@ -59,13 +59,9 @@ class Control:
 
         tournament = Tournament('Nom', 'Lieux', 'date', 'Timer', 'I am description', cls.make_player_list())
         round_instance = Round(tournament.player_dict)
-        # matchs_list = round_instance.generate_match()
-        # ShowView.show_match_name(tournament, matchs_list)
-        # AskView.enter_match_result(tournament, matchs_list)
-
-
-        player_list = tournament.player_dict
-
+        matchs_list = round_instance.generate_match()
+        ShowView.show_match_name(tournament, matchs_list)
+        AskView.update_score(tournament, matchs_list)
             # Ask result for all matchs
             # Update score
 
