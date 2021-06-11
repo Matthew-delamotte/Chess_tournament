@@ -86,13 +86,21 @@ class Round:
 
     def sort_player_by_ranking(self):
         # Triez tous les joueurs par leurs classement
-        sorted_player = sorted(self.players_list, key=attrgetter('rank'))
+        players_dict = self.players_list.values()
+        sorted_player = list(players_dict)
+        sorted_player.sort(key=attrgetter('rank'))
         return sorted_player
 
-    def sort_player_by_score(self):
-        # Triez tous les joueurs par leurs classement
-        sorted_player = sorted(self.players_list, key=attrgetter('score'))
-        return sorted_player
+    #____________________ Old version_____________
+    # def sort_player_by_ranking(self):
+    #     # Triez tous les joueurs par leurs classement
+    #     sorted_player = sorted(self.players_list, key=attrgetter('rank'))
+    #     return sorted_player
+
+    # def sort_player_by_score(self):
+    #     # Triez tous les joueurs par leurs classement
+    #     sorted_player = sorted(self.players_list, key=attrgetter('score'))
+    #     return sorted_player
 
     def list_division(self):
         # division en 2 groupes: un superieur et un inferieur
@@ -110,11 +118,8 @@ class Round:
         match_list = list(zip(superior_list, inferior_list))
         return match_list
 
-
-    def update_players_result_in_round(self):
-        pass
-
-    def update_match_result(self):
+    @classmethod
+    def update_match_result(cls):
         pass
 
     def generate_next_round(self):

@@ -15,16 +15,17 @@ from view import AskView
 class Control:
     @classmethod
     def make_player_list(cls):
-        player1 = Player('Edd', datetime(1995, 6, 28), 'homme', 2)
-        player2 = Player('Matt', datetime(1995, 12, 7), 'homme', 1)
-        player3 = Player('Paul', datetime(1995, 5, 25), 'homme', 3)
-        player4 = Player('Thony', datetime(1995, 8, 9), 'homme', 4)
-        player5 = Player('Seb', datetime(1983, 2, 5), 'homme', 5)
-        player6 = Player('Joddie', datetime(1998, 2, 6), 'femme', 6)
-        player7 = Player('Manon', datetime(1995, 6, 28), 'femme', 7)
-        player8 = Player('Cécile', datetime(1978, 6, 15), 'femme', 8)
-        list_player = [player1, player2, player3, player4, player5, player6, player7, player8]
-        return list_player
+        # list_player = (player1, player2, player3, player4, player5, player6, player7, player8)
+        player_dict = {'player1': Player('Edd', datetime(1995, 6, 28), 'homme', 2),
+                       'player2': Player('Matt', datetime(1995, 12, 7), 'homme', 1),
+                       'player3': Player('Paul', datetime(1995, 5, 25), 'homme', 3),
+                       'player4': Player('Thony', datetime(1995, 8, 9), 'homme', 4),
+                       'player5': Player('Seb', datetime(1983, 2, 5), 'homme', 5),
+                       'player6': Player('Joddie', datetime(1998, 2, 6), 'femme', 6),
+                       'player7': Player('Manon', datetime(1995, 6, 28), 'femme', 7),
+                       'player8': Player('Cécile', datetime(1978, 6, 15), 'femme', 8)
+                       }
+        return player_dict
 
     @classmethod
     def run_menu(cls):
@@ -57,10 +58,14 @@ class Control:
         #                         )
 
         tournament = Tournament('Nom', 'Lieux', 'date', 'Timer', 'I am description', cls.make_player_list())
-        round_match = Round(tournament.player_dict)
-        matchs = round_match.generate_match()
+        round_instance = Round(tournament.player_dict)
+        # matchs_list = round_instance.generate_match()
+        # ShowView.show_match_name(tournament, matchs_list)
+        # AskView.enter_match_result(tournament, matchs_list)
 
-       # for nb of round in tournament
+
+        player_list = tournament.player_dict
+
             # Ask result for all matchs
             # Update score
 
@@ -87,6 +92,9 @@ class Control:
                                                    player[3],
                                                    )
         return player_dict
+
+
+
 
 
 Control.run_tournament()
