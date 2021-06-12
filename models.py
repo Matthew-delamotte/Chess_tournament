@@ -84,12 +84,25 @@ class Round:
         self.players_list = players_list
         self.pairs = []
 
-    def sort_player_by_ranking(self):
+    @classmethod
+    def sort_player_by_ranking(cls, tournament):
         # Triez tous les joueurs par leurs classement
-        players_dict = self.players_list.values()
-        sorted_player = list(players_dict)
+        sorted_player = list(tournament.player_dict.values())
         sorted_player.sort(key=attrgetter('rank'))
         return sorted_player
+
+    @classmethod
+    def sort_player_by_score(cls, tournament):
+        # Triez les joueur par le score:
+        sorted_player_by_score = list(tournament.player_dict.values())
+        sorted_player_by_score.sort(key=attrgetter('score'), reverse=True)
+        sorted_player_tuple = cls.sort_player_by_ranking(tournament)
+        sorted_player_by_rank = sorted_player_tuple
+        for score, rank in zip(sorted_player_by_score, sorted_player_by_rank):
+            pprint(score.score)
+            pprint(rank.rank)
+            # Finir de faire l'update ranking
+
 
     #____________________ Old version_____________
     # def sort_player_by_ranking(self):
@@ -97,14 +110,9 @@ class Round:
     #     sorted_player = sorted(self.players_list, key=attrgetter('rank'))
     #     return sorted_player
 
-    # def sort_player_by_score(self):
-    #     # Triez tous les joueurs par leurs classement
-    #     sorted_player = sorted(self.players_list, key=attrgetter('score'))
-    #     return sorted_player
-
-    def list_division(self):
+    def list_division(self, tournament):
         # division en 2 groupes: un superieur et un inferieur
-        sorted_player = self.sort_player_by_ranking()
+        sorted_player = self.sort_player_by_ranking(tournament)
         length = len(sorted_player)
         middle_index = length // 2
 
@@ -112,9 +120,9 @@ class Round:
         inferior_list = sorted_player[middle_index:]
         return superior_list, inferior_list
 
-    def generate_match(self):
+    def generate_match(self, tournament):
         # Jumelez meilleur joueur des deux moitier superieur et inférieur
-        superior_list, inferior_list = self.list_division()
+        superior_list, inferior_list = self.list_division(tournament)
         match_list = list(zip(superior_list, inferior_list))
         return match_list
 
@@ -138,6 +146,7 @@ class Round:
     # multipe_match = []
     # multipe_match.append(match)
 
+# Round.sort_player_by_score()
 
 # class Algorythm:
 #     def start_algorythm(self):

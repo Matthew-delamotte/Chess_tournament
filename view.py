@@ -3,7 +3,7 @@ from datetime import datetime
 from pprint import pprint
 from operator import attrgetter
 
-
+from models import Round
 
 class ShowView:
     @classmethod
@@ -44,7 +44,13 @@ class ShowView:
             x = matchs_list[match]
             pprint(x[0].name + " :J1:-- vs --:J2: " + x[1].name)
 
-
+    @classmethod
+    def show_score(cls, sorted_player):
+        sorted_player = sorted_player
+        print()
+        for i in sorted_player:
+            pprint(f"{i.name}:  {i.score} score.")
+        return
 
 class CreationView:
     @classmethod
@@ -179,19 +185,13 @@ class AskView:
                     valid_result = False
                 else:
                     pprint("Entrer un valeur valide: (1, 2 ou 0)")
-
-        return result_list
-
-
         return result_list
 
     @classmethod
     def update_score(cls, tournament, matchs_list):
         result_list = cls.enter_match_result(tournament, matchs_list)
-        pprint(result_list)
         p = 0
         for result in result_list:
-            pprint(result)
             match = matchs_list[p]
             players_of_match = match
             players = players_of_match
@@ -202,22 +202,16 @@ class AskView:
                 pprint(f'Joueur {player1.name} gagne, score +1 point.')
                 player1.score += 1
                 pprint('Verification')
-                pprint(player1.score)
-                pprint(player2.score)
             elif result == '2':
                 pprint(f'Joueur {player2.name} gagne, score +1 point.')
                 player2.score += 1
                 pprint('Verification')
-                pprint(player1.score)
-                pprint(player2.score)
             elif result == '0':
                 pprint(f'Joueur {player1.name} et {player2.name} sont égalité, score +0.5 point.')
                 player1.score += 0.5
                 player2.score += 0.5
                 pprint('Verification')
-                pprint(player1.score)
-                pprint(player2.score)
-
+        print()
                     # pprint(x[0].name + " :J1:-- vs --:J2: " + x[1].name)
             # while self.valid_result:
             #     point_to_add = 0

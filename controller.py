@@ -59,16 +59,15 @@ class Control:
 
         tournament = Tournament('Nom', 'Lieux', 'date', 'Timer', 'I am description', cls.make_player_list())
         round_instance = Round(tournament.player_dict)
-        matchs_list = round_instance.generate_match()
+        matchs_list = round_instance.generate_match(tournament)
         ShowView.show_match_name(tournament, matchs_list)
-        # AskView.enter_match_result(tournament, matchs_list)
-        AskView.update_score(tournament, matchs_list)
         AskView.update_score(tournament, matchs_list)
 
-            # Ask result for all matchs
-            # Update score
+        print('------------- Score ----------------')
+        sorted_player = Round.sort_player_by_score(tournament)
+        # ShowView.show_score(sorted_player)
+        # pprint(sorted_player)
 
-            # Verify score player
             # if score p1 == score p2 else sort by rank
 
             # Associate best player with second player ect...
