@@ -87,9 +87,9 @@ class Round:
     @classmethod
     def sort_player_by_ranking(cls, tournament):
         # Triez tous les joueurs par leurs classement
-        sorted_player = list(tournament.player_dict.values())
-        sorted_player.sort(key=attrgetter('rank'))
-        return sorted_player
+        sorted_player_tuple = list(tournament.player_dict.values())
+        sorted_player_by_rank.sort(key=attrgetter('rank'))
+        return sorted_player_by_rank
 
     @classmethod
     def sort_player_by_score(cls, tournament):

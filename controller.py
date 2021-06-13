@@ -47,48 +47,48 @@ class Control:
 
     @classmethod
     def run_tournament(cls):
-        running = True
-        while running:
-            print("Création du tournoi...")
-            # tournament_init = CreationView.create_tournament()
-            # tournament = Tournament(tournament_init[0],
-            #                         tournament_init[1],
-            #                         tournament_init[2],
-            #                         tournament_init[3],
-            #                         tournament_init[4],
-            #                         cls.append_player_to_tournament()
-            #                         )
-            tournament = Tournament('Nom', 'Lieux', 'date', 'Timer', 'I am description', cls.make_player_list())
-            round_instance = Round(tournament.player_dict)
-            match_list = round_instance.generate_match_by_list(tournament)
-            pprint(tournament.round)
-            for i in str(tournament.round):
-                pprint(f'------------ Round {i} ----------------')
-                ShowView.show_match_name(tournament, match_list)
-                AskView.update_score(tournament, match_list)
+        # running = True
+        # while running:
+        print("Création du tournoi...")
+        # tournament_init = CreationView.create_tournament()
+        # tournament = Tournament(tournament_init[0],
+        #                         tournament_init[1],
+        #                         tournament_init[2],
+        #                         tournament_init[3],
+        #                         tournament_init[4],
+        #                         cls.append_player_to_tournament()
+        #                         )
+        tournament = Tournament('Nom', 'Lieux', 'date', 'Timer', 'I am description', cls.make_player_list())
+        round_instance = Round(tournament.player_dict)
+        match_list = round_instance.generate_match_by_list(tournament)
+        pprint(tournament.round)
+        # for i in str(tournament.round):
+        pprint(f'------------ Round ---------------')
+        ShowView.show_match_name(tournament, match_list)
+        AskView.update_score(tournament, match_list)
 
-                print('------------- Score ----------------')
-                sorted_player = Round.sort_player_by_score(tournament)
-                new_match_list = Round.generate_match_by_score(sorted_player, match_list)
-                ShowView.show_score(sorted_player)
+        print('------------- Score ----------------')
+        sorted_player = Round.sort_player_by_score(tournament)
+        new_match_list = Round.generate_match_by_score(sorted_player, match_list)
+        # ShowView.show_score(sorted_player)
 
-            sorted_player = Round.sort_player_by_score(tournament)
-            ShowView.show_score(sorted_player)
-            sorted_player_by_score = Round.sort_player_by_ranking(sorted_player)
-            print()
-            pprint("Score des joueurs:")
-            ShowView.show_score(sorted_player_by_score)
+        sorted_player = Round.sort_player_by_score(tournament)
+        # ShowView.show_score(sorted_player)
+        sorted_player_by_score = Round.sort_player_by_ranking(sorted_player)
+        print()
+        pprint("Score des joueurs:")
+        ShowView.show_score(sorted_player_by_score)
 
-            # PLayer.update_ranking()
-            ShowView.show_ranking()
-            end = input("End tournament? Y/n")
-            if end == 'Y':
-                running = False
-                # Show score
-                # Update_ranking
-                # Show new ranking
-
-        print("Ended")  # move this outside the loop!
+        # PLayer.update_ranking()
+        ShowView.show_ranking()
+        # end = input("End tournament? Y/n")
+        #     if end == 'Y':
+        #         running = False
+        #         # Show score
+        #         # Update_ranking
+        #         # Show new ranking
+        #
+        # print("Ended")  # move this outside the loop!
 
 
 
