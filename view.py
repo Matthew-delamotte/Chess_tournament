@@ -39,6 +39,7 @@ class ShowView:
 
     @classmethod
     def show_match_name(cls, tournament, matchs_list):
+        print()
         for match in range(tournament.round):
             print(f'Match n* {match + 1}')
             x = matchs_list[match]
@@ -50,6 +51,7 @@ class ShowView:
         print()
         for i in sorted_player:
             pprint(f"{i.name}:  {i.score} score.")
+        print()
         return
 
 class CreationView:
