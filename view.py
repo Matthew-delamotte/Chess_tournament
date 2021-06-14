@@ -54,8 +54,15 @@ class ShowView:
         print()
         return
 
-    # @classmethod
-    # def show_ranking(cls, tournament):
+    @classmethod
+    def show_ranking(cls, sorted_player):
+        sorted_player = sorted_player
+        print()
+        for i in sorted_player:
+            pprint(f"{i.name}:  {i.rank + 1} rank.")
+        print()
+        return
+
 
 class CreationView:
     @classmethod
@@ -217,7 +224,9 @@ class AskView:
                 player2.score += 0.5
                 pprint('Verification')
         print()
-                    # pprint(x[0].name + " :J1:-- vs --:J2: " + x[1].name)
+
+
+            # pprint(x[0].name + " :J1:-- vs --:J2: " + x[1].name)
             # while self.valid_result:
             #     point_to_add = 0
             #     result = input("Enter result: ")

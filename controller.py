@@ -2,6 +2,7 @@ from enum import Enum
 from datetime import datetime
 from pprint import pprint
 from operator import attrgetter
+from tinydb import TinyDB
 
 from models import Player
 from models import Tournament
@@ -80,11 +81,9 @@ class Control:
             ShowView.show_match_name(tournament, new_match_list)
             AskView.update_score(tournament, new_match_list)
 
-        pprint(Player.update_ranking())
-        ShowView.show_ranking()
-        #         # Show score
-        #         # Update_ranking
-        #         # Show new ranking
+        sorted_player_by_score = Round.sort_player_by_score(tournament)
+        Player.update_ranking(sorted_player_by_score)
+        ShowView.show_ranking(sorted_player_by_score)
 
     @classmethod
     def append_player_to_tournament(cls):
@@ -100,8 +99,13 @@ class Control:
         return player_dict
 
 
+    def save(self):
+        db_player = TinyDB('players.json')
+        db_tournament = TinyDB('tournanement.json')
+        pass
 
-
+    def load(self):
+        pass
 
 Control.run_tournament()
 

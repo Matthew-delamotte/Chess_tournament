@@ -26,8 +26,11 @@ class Player:
     def get_ranking(self):
         return self.ranking
 
-    def update_ranking(self):
-        return self.rank
+    @classmethod
+    def update_ranking(cls, player_list):
+        for player in player_list:
+            player.rank = player_list.index(player)
+
 
     def reset_score(self):
         pass
@@ -37,6 +40,15 @@ class Player:
                 'birthday': self.birthday,
                 'gender': self.gender,
                 'ranking': self.ranking,
+                }
+
+    def get_json(self):
+        return {'name': self.name,
+                'birthday': self.birthday,
+                'date_start': self.date_start,
+                'round': self.round,
+                'timer': self.timer,
+                'description': self.description,
                 }
 
     # (Manipulate ranking)
@@ -51,7 +63,6 @@ class Tournament:
         self.round = 4
         self.timer = timer
         self.description = description
-        self.current_round = 0
         self.player_dict = player_dict
         self.list_round = []
 
@@ -59,28 +70,19 @@ class Tournament:
         match = Round()
         self.list_round.append(match.generate_match())
 
-    def instance_round(self, pair_match):
-        # instancier un round
-        # append le round dans le list_round
-        return
-
     # TODO: append list_round with instance round
 
-    def get_attributes(self):
+    def get_json(self):
         return {'name': self.name,
                 'place': self.place,
-                'date de début': self.date_start,
-                'nb de round': self.round,
-                'round actuelle': self.current_round,
-                'players': self.player_dict,
+                'date_start': self.date_start,
+                'round': self.round,
                 'timer': self.timer,
                 'description': self.description,
                 }
 
-
 class Round:
     def __init__(self, players_list):
-        # self.name = name
         self.players_list = players_list
         self.pairs = []
 
@@ -96,8 +98,8 @@ class Round:
         # Triez les joueur par le score:
         sorted_player_by_score = list(tournament.player_dict.values())
         sorted_player_by_score.sort(key=attrgetter('score'), reverse=True)
-        sorted_player_tuple = cls.sort_player_by_ranking(tournament)
-        sorted_player_by_rank = sorted_player_tuple
+        # sorted_player_tuple = cls.sort_player_by_ranking(tournament)
+        # sorted_player_by_rank = sorted_player_tuple
         return sorted_player_by_score
         # for score, rank in zip(sorted_player_by_score, sorted_player_by_rank):
             # pprint(score.score)
