@@ -54,6 +54,9 @@ class ShowView:
         print()
         return
 
+    # @classmethod
+    # def show_ranking(cls, tournament):
+
 class CreationView:
     @classmethod
     def create_player(cls):

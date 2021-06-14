@@ -47,8 +47,6 @@ class Control:
 
     @classmethod
     def run_tournament(cls):
-        # running = True
-        # while running:
         print("Création du tournoi...")
         # tournament_init = CreationView.create_tournament()
         # tournament = Tournament(tournament_init[0],
@@ -61,45 +59,32 @@ class Control:
         tournament = Tournament('Nom', 'Lieux', 'date', 'Timer', 'I am description', cls.make_player_list())
         round_instance = Round(tournament.player_dict)
         match_list = round_instance.generate_match_by_list(tournament)
-        pprint(tournament.round)
+        # pprint(tournament.round)
         # for i in str(tournament.round):
         pprint(f'------------ Round ---------------')
         ShowView.show_match_name(tournament, match_list)
         AskView.update_score(tournament, match_list)
+        for i in range(3):
+            print('------------- Score ----------------')
+            sorted_player = Round.sort_player_by_score(tournament)
+            new_match_list = Round.generate_match_by_score(sorted_player, match_list)
+            # ShowView.show_score(sorted_player)
 
-        print('------------- Score ----------------')
-        sorted_player = Round.sort_player_by_score(tournament)
-        new_match_list = Round.generate_match_by_score(sorted_player, match_list)
-        # ShowView.show_score(sorted_player)
+            # sorted_player = Round.sort_player_by_score(tournament)
+            # ShowView.show_score(sorted_player)
+            sorted_player_by_score = Round.sort_player_by_score(tournament)
+            print()
+            pprint("Score des joueurs:")
+            ShowView.show_score(sorted_player_by_score)
+            pprint(f'------------ Round ---------------')
+            ShowView.show_match_name(tournament, new_match_list)
+            AskView.update_score(tournament, new_match_list)
 
-        sorted_player = Round.sort_player_by_score(tournament)
-        # ShowView.show_score(sorted_player)
-        sorted_player_by_score = Round.sort_player_by_ranking(sorted_player)
-        print()
-        pprint("Score des joueurs:")
-        ShowView.show_score(sorted_player_by_score)
-
-        # PLayer.update_ranking()
+        pprint(Player.update_ranking())
         ShowView.show_ranking()
-        # end = input("End tournament? Y/n")
-        #     if end == 'Y':
-        #         running = False
         #         # Show score
         #         # Update_ranking
         #         # Show new ranking
-        #
-        # print("Ended")  # move this outside the loop!
-
-
-
-
-
-
-
-
-
-
-
 
     @classmethod
     def append_player_to_tournament(cls):
