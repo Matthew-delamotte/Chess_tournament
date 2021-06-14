@@ -14,14 +14,14 @@ class Player:
         self.rank = rank
         self.score = 0
 
-    def get_age(self):
-        return int((datetime.now() - self.birthday).days/365.25)
-
-    # Autre methode pour get_age
-    # def get_age(self, today=datetime.now()):
-    #     birthday = self.birthday
-    #     age = today.year - birthday.year - ((today.month, today.day) < (birthday.month, birthday.day))
-    #     return age
+    # def get_age(self):
+    #     return int((datetime.now() - self.birthday).days/365.25)
+    #
+    # # Autre methode pour get_age
+    # # def get_age(self, today=datetime.now()):
+    # #     birthday = self.birthday
+    # #     age = today.year - birthday.year - ((today.month, today.day) < (birthday.month, birthday.day))
+    # #     return age
 
     def get_ranking(self):
         return self.ranking
@@ -32,23 +32,12 @@ class Player:
             player.rank = player_list.index(player)
 
 
-    def reset_score(self):
-        pass
-
-    def get_attribute(self):
-        return {'name': self.name,
-                'birthday': self.birthday,
-                'gender': self.gender,
-                'ranking': self.ranking,
-                }
-
     def get_json(self):
         return {'name': self.name,
-                'birthday': self.birthday,
-                'date_start': self.date_start,
-                'round': self.round,
-                'timer': self.timer,
-                'description': self.description,
+                'birthday': str(self.birthday),
+                'gender': self.gender,
+                'rank': self.rank,
+                'score': self.score
                 }
 
     # (Manipulate ranking)

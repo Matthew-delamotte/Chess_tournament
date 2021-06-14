@@ -166,16 +166,6 @@ class AskView:
         return timer
 
     @classmethod
-    def ask_player_for_tournament(cls):
-        pass
-
-    def show_ranking(self):
-        pass
-
-    def show_match(self):
-        pass
-
-    @classmethod
     def enter_match_result(cls, tournament, matchs_list):
         print()
         pprint("Fin du round")
@@ -224,22 +214,3 @@ class AskView:
                 player2.score += 0.5
                 pprint('Verification')
         print()
-
-
-            # pprint(x[0].name + " :J1:-- vs --:J2: " + x[1].name)
-            # while self.valid_result:
-            #     point_to_add = 0
-            #     result = input("Enter result: ")
-            #     if result == 'win':
-            #         self.score += 1
-            #         pprint('+1 points added')
-            #     elif result == 'draw':
-            #         self.score += 0.5
-            #         pprint('+0.5 points added')
-            #     elif result == 'lose':
-            #         pprint('No point added')
-            #     else:
-            #         raise Exception("Sorry, enter valid result")
-
-
-# pprint(AskView.ask_create_player())

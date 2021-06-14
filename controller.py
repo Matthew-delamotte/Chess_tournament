@@ -49,21 +49,21 @@ class Control:
     @classmethod
     def run_tournament(cls):
         print("Création du tournoi...")
-        # tournament_init = CreationView.create_tournament()
-        # tournament = Tournament(tournament_init[0],
-        #                         tournament_init[1],
-        #                         tournament_init[2],
-        #                         tournament_init[3],
-        #                         tournament_init[4],
-        #                         cls.append_player_to_tournament()
-        #                         )
+        tournament_init = CreationView.create_tournament()
+        tournament = Tournament(tournament_init[0],
+                                tournament_init[1],
+                                tournament_init[2],
+                                tournament_init[3],
+                                tournament_init[4],
+                                cls.make_player_list()
+                                )
         tournament = Tournament('Nom', 'Lieux', 'date', 'Timer', 'I am description', cls.make_player_list())
         round_instance = Round(tournament.player_dict)
         match_list = round_instance.generate_match_by_list(tournament)
-        # pprint(tournament.round)
-        # for i in str(tournament.round):
         pprint(f'------------ Round ---------------')
         ShowView.show_match_name(tournament, match_list)
+        # pprint(tournament.player_dict)
+        cls.save(tournament)
         AskView.update_score(tournament, match_list)
         for i in range(3):
             print('------------- Score ----------------')
@@ -75,15 +75,20 @@ class Control:
             # ShowView.show_score(sorted_player)
             sorted_player_by_score = Round.sort_player_by_score(tournament)
             print()
+            cls.save(tournament)
             pprint("Score des joueurs:")
             ShowView.show_score(sorted_player_by_score)
             pprint(f'------------ Round ---------------')
             ShowView.show_match_name(tournament, new_match_list)
             AskView.update_score(tournament, new_match_list)
+            cls.save(tournament)
+            cls.load()
 
+        cls.save(tournament)
         sorted_player_by_score = Round.sort_player_by_score(tournament)
         Player.update_ranking(sorted_player_by_score)
         ShowView.show_ranking(sorted_player_by_score)
+        cls.save(tournament)
 
     @classmethod
     def append_player_to_tournament(cls):
@@ -98,14 +103,44 @@ class Control:
                                                    )
         return player_dict
 
+    @classmethod
+    def if_save(cls):
+        # serialized_tournament =
+        pass
 
-    def save(self):
+    @classmethod
+    def save(cls, tournament):
         db_player = TinyDB('players.json')
         db_tournament = TinyDB('tournanement.json')
-        pass
+        db_player.truncate() # clear the table
+        db_tournament.truncate()
+        tournament_dict = tournament.get_json()
+        db_tournament.insert(tournament_dict)
+        player_dict = tournament.player_dict
+        for key, value in player_dict.items():
+            db_player.insert(value.get_json())
 
-    def load(self):
-        pass
+        # pprint(tournament.get_json)
+        # db_player.insert(player_dict)
+
+    @classmethod
+    def load(cls):
+        db_player = TinyDB('players.json')
+        db_tournament = TinyDB('tournanement.json')
+        player_table = db_player.table('players')
+        player_dict = {}
+        pprint("_________________STOP__________________")
+        for item in db_player:
+            pprint(item)
+            # player_dict[f'Player{item + 1}'] = Player(item[0],
+            #                                                item[1],
+            #                                                item[2],
+            #                                                item[3]
+            #                                                )
+        print()
+        for item in db_tournament:
+            pprint(item)
+        exit()
 
 Control.run_tournament()
 
