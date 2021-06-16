@@ -7,12 +7,12 @@ from operator import attrgetter
 
 
 class Player:
-    def __init__(self, name, birthday, gender, rank):
+    def __init__(self, name, birthday, gender, rank, score):
         self.name = name
         self.birthday = birthday
         self.gender = gender
         self.rank = rank
-        self.score = 0
+        self.score = score
 
     # def get_age(self):
     #     return int((datetime.now() - self.birthday).days/365.25)
@@ -34,7 +34,7 @@ class Player:
 
     def get_json(self):
         return {'name': self.name,
-                'birthday': str(self.birthday),
+                'birthday': self.birthday,
                 'gender': self.gender,
                 'rank': self.rank,
                 'score': self.score
@@ -44,7 +44,6 @@ class Player:
 
 
 class Tournament:
-    LIST_ROUND = []
     def __init__(self, name, place, date, timer, description, player_dict):
         self.name = name
         self.place = place
@@ -54,6 +53,7 @@ class Tournament:
         self.description = description
         self.player_dict = player_dict
         self.list_round = []
+        self.end = False
 
     def append_list_round(self):
         match = Round()
@@ -68,6 +68,7 @@ class Tournament:
                 'round': self.round,
                 'timer': self.timer,
                 'description': self.description,
+                'end': self.end,
                 }
 
 class Round:
@@ -129,22 +130,6 @@ class Round:
         superior_list, inferior_list = self.list_division(tournament)
         match_list = list(zip(superior_list, inferior_list))
         return match_list
-
-    @classmethod
-    def update_match_result(cls):
-        pass
-
-    def generate_next_round(self):
-        pass
-
-    def update_ranking(self):
-        pass
-
-    def get_daytime_of_start(self):
-        pass
-
-    def get_daytime_of_end(self):
-        pass
 
     # match = ([player1, Score], [player2, Score])
     # multipe_match = []

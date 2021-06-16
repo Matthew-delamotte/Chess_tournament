@@ -30,9 +30,8 @@ class ShowView:
         pprint("Bienvenue sur le programme de tournois d'échecs.")
         print()
         pprint("Que voulez vous faire?")
-        pprint("[1] ..Créer un tournois..")
-        pprint("[2] ..Continuez un tournois..")
-        pprint("[3] ..Ajoutez des joueur..")
+        pprint("[1] ..Jouez/Continuer..")
+        pprint("[2] ..Ajoutez des joueurs..")
         choice = input()
         print()
         return choice
@@ -42,6 +41,7 @@ class ShowView:
         print()
         for match in range(tournament.round):
             print(f'Match n* {match + 1}')
+            pprint(match)
             x = matchs_list[match]
             pprint(x[0].name + " :J1:-- vs --:J2: " + x[1].name)
 
@@ -73,7 +73,8 @@ class CreationView:
         gender = AskView.ask_gender()
         birthday = AskView.ask_birthday()
         rank = AskView.ask_rank()
-        new_player = (name, birthday, gender, rank)
+        score = 0
+        new_player = (name, birthday, gender, rank, score)
         return new_player
 
     @classmethod
@@ -136,10 +137,13 @@ class AskView:
 
     @classmethod
     def ask_birthday(cls):
-        born_year = int(input('Entrer date de naissance(aaaa): '))
-        born_month = int(input('(mm): '))
-        born_day = int(input('(jj): '))
-        birthday = datetime(born_year, born_month, born_day)
+        # born_year = int(input('Entrer date de naissance(aaaa): '))
+        # born_month = int(input('(mm): '))
+        # born_day = int(input('(jj): '))
+        born_year = input('Entrer date de naissance(aaaa): ')
+        born_month = input('(mm): ')
+        born_day = input('(jj): ')
+        birthday = (born_year, born_month, born_day)
         return birthday
 
     @classmethod

@@ -2,7 +2,7 @@ from enum import Enum
 from datetime import datetime
 from pprint import pprint
 from operator import attrgetter
-from tinydb import TinyDB
+from tinydb import TinyDB, Query
 
 from models import Player
 from models import Tournament
@@ -15,17 +15,49 @@ from view import AskView
 
 class Control:
     @classmethod
-    def make_player_list(cls):
+    def make_player_dict(cls):
+        tournament, player_data = cls.load()
+        player_dict = {}
+        p = 0
+        for player in player_data:
+            player_dict[f'Player{p + 1}'] = Player(player.get('name'),
+                                                   player.get('birthday'),
+                                                   player.get('gender'),
+                                                   player.get('rank'),
+                                                   player.get('score')
+                                                   )
+            p += 1
+
+        # player_dict = {'player1': Player('Edd', ('', '', ''), 'homme', 2, 0),
+        #                'player2': Player('Matt', ('', '', ''), 'homme', 1, 0),
+        #                'player3': Player('Paul', ('', '', ''), 'homme', 3, 0),
+        #                'player4': Player('Thony', ('', '', ''), 'homme', 4, 0),
+        #                'player5': Player('Seb', ('', '', ''), 'homme', 5, 0),
+        #                'player6': Player('Joddie', ('', '', ''), 'femme', 6, 0),
+        #                'player7': Player('Manon', ('', '', ''), 'femme', 7, 0),
+        #                'player8': Player('Cécile', ('', '', ''), 'femme', 8, 0)
+        #                }
+        # player_dict = cls.append_player_to_tournament()
+        return player_dict
+
+    @classmethod
+    def create_new_player(cls):
+        player_dict = cls.append_player_to_tournament()
+        return player_dict
+
+    @classmethod
+    def player_dict(cls):
         # list_player = (player1, player2, player3, player4, player5, player6, player7, player8)
-        player_dict = {'player1': Player('Edd', datetime(1995, 6, 28), 'homme', 2),
-                       'player2': Player('Matt', datetime(1995, 12, 7), 'homme', 1),
-                       'player3': Player('Paul', datetime(1995, 5, 25), 'homme', 3),
-                       'player4': Player('Thony', datetime(1995, 8, 9), 'homme', 4),
-                       'player5': Player('Seb', datetime(1983, 2, 5), 'homme', 5),
-                       'player6': Player('Joddie', datetime(1998, 2, 6), 'femme', 6),
-                       'player7': Player('Manon', datetime(1995, 6, 28), 'femme', 7),
-                       'player8': Player('Cécile', datetime(1978, 6, 15), 'femme', 8)
+        player_dict = {'player1': Player('Edd', ('', '', ''), 'homme', 2, 0),
+                       'player2': Player('Matt', ('', '', ''), 'homme', 1, 0),
+                       'player3': Player('Paul', ('', '', ''), 'homme', 3, 0),
+                       'player4': Player('Thony', ('', '', ''), 'homme', 4, 0),
+                       'player5': Player('Seb', ('', '', ''), 'homme', 5, 0),
+                       'player6': Player('Joddie', ('', '', ''), 'femme', 6, 0),
+                       'player7': Player('Manon', ('', '', ''), 'femme', 7, 0),
+                       'player8': Player('Cécile', ('', '', ''), 'femme', 8, 0)
                        }
+        # player_dict = cls.append_player_to_tournament()
         return player_dict
 
     @classmethod
@@ -37,10 +69,6 @@ class Control:
                 cls.run_tournament()
                 valid_choice = False
             elif choice == '2':
-                exit()
-                valid_choice = False
-            elif choice == '3':
-                ShowView.show_new_player()
                 AskView.ask_create_player()
                 valid_choice = False
             else:
@@ -48,16 +76,33 @@ class Control:
 
     @classmethod
     def run_tournament(cls):
-        print("Création du tournoi...")
-        tournament_init = CreationView.create_tournament()
-        tournament = Tournament(tournament_init[0],
-                                tournament_init[1],
-                                tournament_init[2],
-                                tournament_init[3],
-                                tournament_init[4],
-                                cls.make_player_list()
-                                )
-        tournament = Tournament('Nom', 'Lieux', 'date', 'Timer', 'I am description', cls.make_player_list())
+        data_tournament, data_player = cls.load()
+        tournament = ()
+        tournament = Tournament('Nom', 'Lieux', 'date', 'Timer', 'I am description', cls.player_dict())
+        for tournament in data_tournament:
+            if tournament.get('end') == False:
+                pprint("--------------------- Reprise du tournoi ----------------------")
+                tournament = Tournament(tournament.get('name'),
+                                        tournament.get('place'),
+                                        tournament.get('date_start'),
+                                        tournament.get('timer'),
+                                        tournament.get('description'),
+                                        cls.make_player_dict()
+                                        )
+
+            else:
+                print("Création du tournoi...")
+                tournament_init = CreationView.create_tournament()
+                # player_dict = cls.append_player_to_tournament()
+                tournament = Tournament(tournament_init[0],
+                                        tournament_init[1],
+                                        tournament_init[2],
+                                        tournament_init[3],
+                                        tournament_init[4],
+                                        cls.player_dict()
+                                        )
+
+
         round_instance = Round(tournament.player_dict)
         match_list = round_instance.generate_match_by_list(tournament)
         pprint(f'------------ Round ---------------')
@@ -88,30 +133,44 @@ class Control:
         sorted_player_by_score = Round.sort_player_by_score(tournament)
         Player.update_ranking(sorted_player_by_score)
         ShowView.show_ranking(sorted_player_by_score)
+        tournament.end = True
+        pprint("Fin du tournoi")
         cls.save(tournament)
+        cls.load()
 
     @classmethod
     def append_player_to_tournament(cls):
         player_dict = {}
-        for p in range(1):
+        print()
+        for p in range(8):
             print(f'Ajoutez joueur {p + 1}:')
             player = CreationView.create_player()
             player_dict[f'Player{p + 1}'] = Player(player[0],
                                                    player[1],
                                                    player[2],
                                                    player[3],
+                                                   player[4]
                                                    )
         return player_dict
 
     @classmethod
     def if_save(cls):
-        # serialized_tournament =
-        pass
+        db = TinyDB('tournament.json')
+        # tournament = []
+        v = db.table()
+        # for i in db:
+        #     pprint(i)
+        # pprint(tournament)
+        # if db_tournament.end == False:
+        #     pprint("Chargement tournoi")
+        #     cls.load()
+        # else:
+        #     pprint("Nouveau tournois")
 
     @classmethod
     def save(cls, tournament):
         db_player = TinyDB('players.json')
-        db_tournament = TinyDB('tournanement.json')
+        db_tournament = TinyDB('tournament.json')
         db_player.truncate() # clear the table
         db_tournament.truncate()
         tournament_dict = tournament.get_json()
@@ -120,29 +179,29 @@ class Control:
         for key, value in player_dict.items():
             db_player.insert(value.get_json())
 
-        # pprint(tournament.get_json)
-        # db_player.insert(player_dict)
-
     @classmethod
     def load(cls):
         db_player = TinyDB('players.json')
-        db_tournament = TinyDB('tournanement.json')
+        db_tournament = TinyDB('tournament.json')
         player_table = db_player.table('players')
-        player_dict = {}
-        pprint("_________________STOP__________________")
-        for item in db_player:
-            pprint(item)
-            # player_dict[f'Player{item + 1}'] = Player(item[0],
-            #                                                item[1],
-            #                                                item[2],
-            #                                                item[3]
-            #                                                )
-        print()
-        for item in db_tournament:
-            pprint(item)
-        exit()
+        tournament_table = db_tournament.all()
+        player_table = db_player.all()
+        return tournament_table, player_table;
+        # return tournament_table, player_table
+        # pprint("_________________STOP__________________")
+        # for item in db_player:
+        #     pprint(item)
+        #     # player_dict[f'Player{item + 1}'] = Player(item[0],
+        #     #                                                item[1],
+        #     #                                                item[2],
+        #     #                                                item[3]
+        #     #                                                )
+        # print()
 
-Control.run_tournament()
+
+# Control.run_tournament()
+# Control.save()
+# Control.load()
 
 # list = controller.make_player_list()
 # for player in list:

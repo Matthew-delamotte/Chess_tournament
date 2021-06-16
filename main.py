@@ -134,14 +134,11 @@ il n'est donc pas nécessaire de mettre en place un équilibrage des couleurs.
 
 # pprint(tournoi.get_attributes())
 
-from enum import Enum
-from datetime import datetime
-from pprint import pprint
-from operator import attrgetter
+from controller import Control
 
 
 def main():
-    pass
+    Control.run_tournament()
 
 
 if __name__ == "__main__":
