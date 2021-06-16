@@ -99,7 +99,7 @@ class Control:
                                         tournament_init[2],
                                         tournament_init[3],
                                         tournament_init[4],
-                                        cls.player_dict()
+                                        cls.create_new_player()
                                         )
 
 
