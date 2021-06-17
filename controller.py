@@ -27,17 +27,6 @@ class Control:
                                                    player.get('score')
                                                    )
             p += 1
-
-        # player_dict = {'player1': Player('Edd', ('', '', ''), 'homme', 2, 0),
-        #                'player2': Player('Matt', ('', '', ''), 'homme', 1, 0),
-        #                'player3': Player('Paul', ('', '', ''), 'homme', 3, 0),
-        #                'player4': Player('Thony', ('', '', ''), 'homme', 4, 0),
-        #                'player5': Player('Seb', ('', '', ''), 'homme', 5, 0),
-        #                'player6': Player('Joddie', ('', '', ''), 'femme', 6, 0),
-        #                'player7': Player('Manon', ('', '', ''), 'femme', 7, 0),
-        #                'player8': Player('Cécile', ('', '', ''), 'femme', 8, 0)
-        #                }
-        # player_dict = cls.append_player_to_tournament()
         return player_dict
 
     @classmethod
@@ -78,36 +67,32 @@ class Control:
     def run_tournament(cls):
         data_tournament, data_player = cls.load()
         tournament = ()
-        tournament = Tournament('Nom', 'Lieux', 'date', 'Timer', 'I am description', cls.player_dict())
-        for tournament in data_tournament:
-            if tournament.get('end') == False:
+        # tournament = Tournament('Nom', 'Lieux', 'date', 'Timer', 'I am description', cls.player_dict())
+        if len(data_tournament) == 0:
+            print("Création du tournoi...")
+            tournament_init = CreationView.create_tournament()
+            tournament = Tournament(tournament_init[0],
+                                    tournament_init[1],
+                                    tournament_init[2],
+                                    tournament_init[3],
+                                    tournament_init[4],
+                                    cls.player_dict()
+                                    )
+        else:
+            for tournament_db in data_tournament:
                 pprint("--------------------- Reprise du tournoi ----------------------")
-                tournament = Tournament(tournament.get('name'),
-                                        tournament.get('place'),
-                                        tournament.get('date_start'),
-                                        tournament.get('timer'),
-                                        tournament.get('description'),
+                tournament = Tournament(tournament_db.get('name'),
+                                        tournament_db.get('place'),
+                                        tournament_db.get('date_start'),
+                                        tournament_db.get('timer'),
+                                        tournament_db.get('description'),
                                         cls.make_player_dict()
                                         )
-
-            else:
-                print("Création du tournoi...")
-                tournament_init = CreationView.create_tournament()
-                # player_dict = cls.append_player_to_tournament()
-                tournament = Tournament(tournament_init[0],
-                                        tournament_init[1],
-                                        tournament_init[2],
-                                        tournament_init[3],
-                                        tournament_init[4],
-                                        cls.create_new_player()
-                                        )
-
 
         round_instance = Round(tournament.player_dict)
         match_list = round_instance.generate_match_by_list(tournament)
         pprint(f'------------ Round ---------------')
         ShowView.show_match_name(tournament, match_list)
-        # pprint(tournament.player_dict)
         cls.save(tournament)
         AskView.update_score(tournament, match_list)
         for i in range(3):
@@ -136,6 +121,8 @@ class Control:
         tournament.end = True
         pprint("Fin du tournoi")
         cls.save(tournament)
+        db_tournament = TinyDB('tournament.json')
+        db_tournament.truncate()  # clear the table
         cls.load()
 
     @classmethod
