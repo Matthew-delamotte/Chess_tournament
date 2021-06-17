@@ -86,33 +86,26 @@ class Control:
                                         tournament_db.get('date_start'),
                                         tournament_db.get('timer'),
                                         tournament_db.get('description'),
-                                        cls.make_player_dict()
+                                        cls.make_player_dict(),
+                                        tournament_db.get('current_round')
                                         )
 
         round_instance = Round(tournament.player_dict)
         match_list = round_instance.generate_match_by_list(tournament)
-        pprint(f'------------ Round ---------------')
-        ShowView.show_match_name(tournament, match_list)
-        cls.save(tournament)
-        AskView.update_score(tournament, match_list)
-        for i in range(3):
+        for i in range(tournament.current_round, tournament.round):
+            pprint(f'------------ Round {i + 1} ---------------')
+            ShowView.show_match_name(tournament, match_list)
+            AskView.update_score(tournament, match_list)
+            cls.save(tournament)
+            tournament.current_round += 1
             print('------------- Score ----------------')
             sorted_player = Round.sort_player_by_score(tournament)
             new_match_list = Round.generate_match_by_score(sorted_player, match_list)
-            # ShowView.show_score(sorted_player)
-
-            # sorted_player = Round.sort_player_by_score(tournament)
-            # ShowView.show_score(sorted_player)
             sorted_player_by_score = Round.sort_player_by_score(tournament)
             print()
             cls.save(tournament)
             pprint("Score des joueurs:")
             ShowView.show_score(sorted_player_by_score)
-            pprint(f'------------ Round ---------------')
-            ShowView.show_match_name(tournament, new_match_list)
-            AskView.update_score(tournament, new_match_list)
-            cls.save(tournament)
-            cls.load()
 
         cls.save(tournament)
         sorted_player_by_score = Round.sort_player_by_score(tournament)
