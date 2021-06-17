@@ -84,7 +84,6 @@ class AskView:
         pprint("Saisie des resultat")
         result_list = []
         for i in range(len(matchs_list)):
-            print()
             valid_result = True
             while valid_result:
                 result = input(f"Entrer resultat match {i + 1}: ")
@@ -103,6 +102,7 @@ class AskView:
 
     @classmethod
     def update_score(cls, tournament, matchs_list):
+        print()
         result_list = cls.enter_match_result(tournament, matchs_list)
         p = 0
         for result in result_list:
@@ -115,14 +115,11 @@ class AskView:
             if result == '1':
                 pprint(f'Joueur {player1.name} gagne, score +1 point.')
                 player1.score += 1
-                pprint('Verification')
             elif result == '2':
                 pprint(f'Joueur {player2.name} gagne, score +1 point.')
                 player2.score += 1
-                pprint('Verification')
             elif result == '0':
                 pprint(f'Joueur {player1.name} et {player2.name} sont égalité, score +0.5 point.')
                 player1.score += 0.5
                 player2.score += 0.5
-                pprint('Verification')
         print()

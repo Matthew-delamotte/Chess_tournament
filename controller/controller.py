@@ -96,13 +96,11 @@ class Control:
             AskView.update_score(tournament, match_list)
             cls.save(tournament)
             tournament.current_round += 1
-            print('------------- Score ----------------')
             sorted_player = Round.sort_player_by_score(tournament)
             new_match_list = Round.generate_match_by_score(sorted_player, match_list)
             sorted_player_by_score = Round.sort_player_by_score(tournament)
             print()
             cls.save(tournament)
-            pprint("Score des joueurs:")
             ShowView.show_score(sorted_player_by_score)
 
         cls.save(tournament)
