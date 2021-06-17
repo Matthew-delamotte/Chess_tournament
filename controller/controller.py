@@ -4,13 +4,13 @@ from pprint import pprint
 from operator import attrgetter
 from tinydb import TinyDB, Query
 
-from models import Player
-from models import Tournament
-from models import Round
+from models.player import Player
+from models.tournament import Tournament
+from models.round import Round
 
-from view import CreationView
-from view import ShowView
-from view import AskView
+from views.createview import CreationView
+from views.showview import ShowView
+from views.askview import AskView
 
 
 class Control:
@@ -46,7 +46,6 @@ class Control:
                        'player7': Player('Manon', ('', '', ''), 'femme', 7, 0),
                        'player8': Player('Cécile', ('', '', ''), 'femme', 8, 0)
                        }
-        # player_dict = cls.append_player_to_tournament()
         return player_dict
 
     @classmethod
@@ -67,7 +66,6 @@ class Control:
     def run_tournament(cls):
         data_tournament, data_player = cls.load()
         tournament = ()
-        # tournament = Tournament('Nom', 'Lieux', 'date', 'Timer', 'I am description', cls.player_dict())
         if len(data_tournament) == 0:
             print("Création du tournoi...")
             tournament_init = CreationView.create_tournament()
@@ -133,19 +131,6 @@ class Control:
                                                    )
         return player_dict
 
-    @classmethod
-    def if_save(cls):
-        db = TinyDB('tournament.json')
-        # tournament = []
-        v = db.table()
-        # for i in db:
-        #     pprint(i)
-        # pprint(tournament)
-        # if db_tournament.end == False:
-        #     pprint("Chargement tournoi")
-        #     cls.load()
-        # else:
-        #     pprint("Nouveau tournois")
 
     @classmethod
     def save(cls, tournament):
@@ -161,28 +146,9 @@ class Control:
 
     @classmethod
     def load(cls):
-        db_player = TinyDB('players.json')
-        db_tournament = TinyDB('tournament.json')
+        db_player = TinyDB('save/players.json')
+        db_tournament = TinyDB('save/tournament.json')
         player_table = db_player.table('players')
         tournament_table = db_tournament.all()
         player_table = db_player.all()
         return tournament_table, player_table;
-        # return tournament_table, player_table
-        # pprint("_________________STOP__________________")
-        # for item in db_player:
-        #     pprint(item)
-        #     # player_dict[f'Player{item + 1}'] = Player(item[0],
-        #     #                                                item[1],
-        #     #                                                item[2],
-        #     #                                                item[3]
-        #     #                                                )
-        # print()
-
-
-# Control.run_tournament()
-# Control.save()
-# Control.load()
-
-# list = controller.make_player_list()
-# for player in list:
-#     pprint(player.name)

@@ -100,41 +100,9 @@ Un tirage au sort des joueurs définira qui joue en blanc et qui joue en noir ;
 il n'est donc pas nécessaire de mettre en place un équilibrage des couleurs.
 
 --------------------------------------------------------------
-
 """
 
-# def change_attribute(Attribute, value):
-#     "In this function I can not access car.color directly"
-#     Attribute.score = value
-
-# def increase_score():
-#     for player in make_player_list():
-#         if player.score == 0:
-#             change_attribute(i, )
-#             pprint(i.score)
-#     return
-
-# score = Score(0)
-# list_player = make_player_list()
-# algo = Algorythm(list_player)
-# pprint(algo.generate_pair())
-#
-
-# algo = Algorythm(make_player_list())
-# pprint(increase_score())
-
-
-# for player in list_player:
-#     pprint(player.ranking)
-
-# pprint(player2.get_age())
-# pprint(player2.get_attribut())
-
-# tournoi = Tournament('name', 'Paris', list_player, Timer.QUICK, "Exemple")
-
-# pprint(tournoi.get_attributes())
-
-from controller import Control
+from controller.controller import Control
 
 
 def main():
