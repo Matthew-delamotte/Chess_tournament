@@ -146,8 +146,8 @@ class Control:
 
     @classmethod
     def load(cls):
-        db_player = TinyDB('save/players.json')
-        db_tournament = TinyDB('save/tournament.json')
+        db_player = TinyDB('players.json')
+        db_tournament = TinyDB('tournament.json')
         player_table = db_player.table('players')
         tournament_table = db_tournament.all()
         player_table = db_player.all()
