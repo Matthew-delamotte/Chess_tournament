@@ -1,9 +1,5 @@
-from enum import Enum
 from datetime import datetime
 from pprint import pprint
-from operator import attrgetter
-
-from models.round import Round
 
 from views.askview import AskView
 

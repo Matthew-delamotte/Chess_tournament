@@ -1,9 +1,5 @@
-from enum import Enum
-from datetime import datetime
 from pprint import pprint
-from operator import attrgetter
 
-from models.round import Round
 
 class ShowView:
     @classmethod
@@ -23,7 +19,6 @@ class ShowView:
         pprint('Date de naissance: ' + str(new_player[1]))
         pprint('Genre: ' + new_player[2])
         AskView.ask_create_player()
-
 
     @classmethod
     def show_menu(cls):

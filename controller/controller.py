@@ -1,8 +1,5 @@
-from enum import Enum
-from datetime import datetime
 from pprint import pprint
-from operator import attrgetter
-from tinydb import TinyDB, Query
+from tinydb import TinyDB
 
 from models.player import Player
 from models.tournament import Tournament
@@ -36,15 +33,22 @@ class Control:
 
     @classmethod
     def player_dict(cls):
-        # list_player = (player1, player2, player3, player4, player5, player6, player7, player8)
-        player_dict = {'player1': Player('Edd', ('', '', ''), 'homme', 2, 0),
-                       'player2': Player('Matt', ('', '', ''), 'homme', 1, 0),
-                       'player3': Player('Paul', ('', '', ''), 'homme', 3, 0),
-                       'player4': Player('Thony', ('', '', ''), 'homme', 4, 0),
-                       'player5': Player('Seb', ('', '', ''), 'homme', 5, 0),
-                       'player6': Player('Joddie', ('', '', ''), 'femme', 6, 0),
-                       'player7': Player('Manon', ('', '', ''), 'femme', 7, 0),
-                       'player8': Player('Cécile', ('', '', ''), 'femme', 8, 0)
+        player_dict = {'player1': Player('Edd', ('', '', ''),
+                                         'homme', 2, 0),
+                       'player2': Player('Matt', ('', '', ''),
+                                         'homme', 1, 0),
+                       'player3': Player('Paul', ('', '', ''),
+                                         'homme', 3, 0),
+                       'player4': Player('Thony', ('', '', ''),
+                                         'homme', 4, 0),
+                       'player5': Player('Seb', ('', '', ''),
+                                         'homme', 5, 0),
+                       'player6': Player('Joddie', ('', '', ''),
+                                         'femme', 6, 0),
+                       'player7': Player('Manon', ('', '', ''),
+                                         'femme', 7, 0),
+                       'player8': Player('Cécile', ('', '', ''),
+                                         'femme', 8, 0)
                        }
         return player_dict
 
@@ -76,9 +80,13 @@ class Control:
                                     tournament_init[4],
                                     cls.player_dict()
                                     )
+            cls.save(tournament)
+
         else:
             for tournament_db in data_tournament:
-                pprint("--------------------- Reprise du tournoi ----------------------")
+                pprint("---------------------"
+                       " Reprise du tournoi"
+                       " --------------------")
                 tournament = Tournament(tournament_db.get('name'),
                                         tournament_db.get('place'),
                                         tournament_db.get('date_start'),
@@ -87,6 +95,7 @@ class Control:
                                         cls.make_player_dict(),
                                         tournament_db.get('current_round')
                                         )
+                cls.save(tournament)
 
         round_instance = Round(tournament.player_dict)
         match_list = round_instance.generate_match_by_list(tournament)
@@ -97,7 +106,8 @@ class Control:
             cls.save(tournament)
             tournament.current_round += 1
             sorted_player = Round.sort_player_by_score(tournament)
-            new_match_list = Round.generate_match_by_score(sorted_player, match_list)
+            match_list = Round.generate_match_by_score(sorted_player,
+                                                       match_list)
             sorted_player_by_score = Round.sort_player_by_score(tournament)
             print()
             cls.save(tournament)
@@ -129,12 +139,11 @@ class Control:
                                                    )
         return player_dict
 
-
     @classmethod
     def save(cls, tournament):
         db_player = TinyDB('players.json')
         db_tournament = TinyDB('tournament.json')
-        db_player.truncate() # clear the table
+        db_player.truncate()
         db_tournament.truncate()
         tournament_dict = tournament.get_json()
         db_tournament.insert(tournament_dict)

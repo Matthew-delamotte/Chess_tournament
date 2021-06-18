@@ -1,7 +1,5 @@
-from enum import Enum
-from datetime import datetime
-from pprint import pprint
 from operator import attrgetter
+
 
 class Round:
     def __init__(self, players_list):
@@ -12,17 +10,17 @@ class Round:
     def sort_player_by_ranking(cls, tournament):
         # Triez tous les joueurs par leurs classement
         sorted_player = list(tournament.player_dict.values())
-        sorted_player.sort(key=attrgetter('rank'))
+        sorted_player.sort(key=attrgetter("rank"))
         return sorted_player
 
     @classmethod
     def sort_player_by_score(cls, tournament):
         # Triez les joueur par le score:
         sorted_player_by_score = list(tournament.player_dict.values())
-        sorted_player_by_score.sort(key=attrgetter('score'), reverse=True)
+        sorted_player_by_score.sort(key=attrgetter("score"), reverse=True)
         return sorted_player_by_score
 
-    #____________________ Old version_____________
+    # ____________________ Old version_____________
     # def sort_player_by_ranking(self):
     #     # Triez tous les joueurs par leurs classement
     #     sorted_player = sorted(self.players_list, key=attrgetter('rank'))

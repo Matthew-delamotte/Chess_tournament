@@ -1,9 +1,6 @@
-from enum import Enum
-from datetime import datetime
 from pprint import pprint
-from operator import attrgetter
 
-from models.round import Round
+from views.showview import ShowView
 
 
 class AskView:
@@ -12,13 +9,13 @@ class AskView:
         valid_result = True
         while valid_result:
             choice = input("Ajouter des nouveau joueurs? (y ou n)")
-            if choice == 'y':
+            if choice == "y":
                 ShowView.show_new_player()
                 valid_result = False
-            elif choice == 'n':
+            elif choice == "n":
                 ShowView.show_menu()
             else:
-                pprint('Enter valid value (y/n)')
+                pprint("Enter valid value (y/n)")
         return choice
 
     @classmethod
@@ -33,14 +30,14 @@ class AskView:
         valid_result = True
         while valid_result:
             gender = input("Entrez le sexe (h ou f): ")
-            if gender == 'h':
-                gender = 'Homme'
+            if gender == "h":
+                gender = "Homme"
                 valid_result = False
-            elif gender == 'f':
+            elif gender == "f":
                 gender = "Femme"
                 valid_result = False
             else:
-                pprint('Enter valid result')
+                pprint("Enter valid result")
         return gender
 
     @classmethod
@@ -48,9 +45,9 @@ class AskView:
         # born_year = int(input('Entrer date de naissance(aaaa): '))
         # born_month = int(input('(mm): '))
         # born_day = int(input('(jj): '))
-        born_year = input('Entrer date de naissance(aaaa): ')
-        born_month = input('(mm): ')
-        born_day = input('(jj): ')
+        born_year = input("Entrer date de naissance(aaaa): ")
+        born_month = input("(mm): ")
+        born_day = input("(jj): ")
         birthday = (born_year, born_month, born_day)
         return birthday
 
@@ -63,7 +60,8 @@ class AskView:
     def ask_timer(cls):
         valid_result = True
         while valid_result:
-            timer = input("Choissisez le type de temps (bullet, biltz ou rapide): ")
+            timer = input("Choissisez le type de temps"
+                          " (bullet, biltz ou rapide): ")
             if timer == "bullet":
                 timer = "BULLET"
                 valid_result = False
@@ -87,13 +85,13 @@ class AskView:
             valid_result = True
             while valid_result:
                 result = input(f"Entrer resultat match {i + 1}: ")
-                if result == '1':
+                if result == "1":
                     result_list.append(result)
                     valid_result = False
-                elif result == '2':
+                elif result == "2":
                     result_list.append(result)
                     valid_result = False
-                elif result == '0':
+                elif result == "0":
                     result_list.append(result)
                     valid_result = False
                 else:
@@ -112,14 +110,20 @@ class AskView:
             player1 = players[0]
             player2 = players[1]
             p += 1
-            if result == '1':
-                pprint(f'Joueur {player1.name} gagne, score +1 point.')
+            if result == "1":
+                pprint(f"Joueur {player1.name} gagne,"
+                       f" score +1 point.")
                 player1.score += 1
-            elif result == '2':
-                pprint(f'Joueur {player2.name} gagne, score +1 point.')
+            elif result == "2":
+                pprint(f"Joueur {player2.name}"
+                       f" gagne, score +1 point.")
                 player2.score += 1
-            elif result == '0':
-                pprint(f'Joueur {player1.name} et {player2.name} sont égalité, score +0.5 point.')
+            elif result == "0":
+                pprint(
+                    f"Joueur {player1.name} et "
+                    f"{player2.name} sont égalité,"
+                    f" score +0.5 point."
+                )
                 player1.score += 0.5
                 player2.score += 0.5
         print()
