@@ -1,22 +1,20 @@
 from pprint import pprint
 
-from views.showview import ShowView
-
 
 class AskView:
-    @classmethod
-    def ask_create_player(cls):
-        valid_result = True
-        while valid_result:
-            choice = input("Ajouter des nouveau joueurs? (y ou n)")
-            if choice == "y":
-                ShowView.show_new_player()
-                valid_result = False
-            elif choice == "n":
-                ShowView.show_menu()
-            else:
-                pprint("Enter valid value (y/n)")
-        return choice
+    # @classmethod
+    # def ask_create_player(cls):
+    #     valid_result = True
+    #     while valid_result:
+    #         choice = input("Ajouter des nouveau joueurs? (y ou n)")
+    #         if choice == "y":
+    #             ShowView.show_new_player()
+    #             valid_result = False
+    #         elif choice == "n":
+    #             ShowView.show_menu()
+    #         else:
+    #             pprint("Enter valid value (y/n)")
+    #     return choice
 
     @classmethod
     def ask_name(cls):

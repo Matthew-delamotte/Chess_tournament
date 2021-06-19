@@ -2,34 +2,34 @@ from pprint import pprint
 
 
 class ShowView:
-    @classmethod
-    def show_create_tournament(cls):
-        tournament = CreationView.create_tournament()
-        pprint('Nom du tournois: ' + tournament[0])
-        pprint('Lieux: ' + tournament[1])
-        pprint('Date de début: ' + tournament[2])
-        pprint('Vitesse de jeu: ' + tournament[3])
-        pprint('Description: ' + tournament[4])
-
-    @classmethod
-    def show_new_player(cls):
-        new_player = CreationView.create_player()
-        print()
-        pprint('Nom: ' + new_player[0])
-        pprint('Date de naissance: ' + str(new_player[1]))
-        pprint('Genre: ' + new_player[2])
-        AskView.ask_create_player()
-
-    @classmethod
-    def show_menu(cls):
-        pprint("Bienvenue sur le programme de tournois d'échecs.")
-        print()
-        pprint("Que voulez vous faire?")
-        pprint("[1] ..Jouez/Continuer..")
-        pprint("[2] ..Ajoutez des joueurs..")
-        choice = input()
-        print()
-        return choice
+    # @classmethod
+    # def show_create_tournament(cls):
+    #     tournament = CreationView.create_tournament()
+    #     pprint('Nom du tournois: ' + tournament[0])
+    #     pprint('Lieux: ' + tournament[1])
+    #     pprint('Date de début: ' + tournament[2])
+    #     pprint('Vitesse de jeu: ' + tournament[3])
+    #     pprint('Description: ' + tournament[4])
+    #
+    # @classmethod
+    # def show_new_player(cls):
+    #     new_player = CreationView.create_player()
+    #     print()
+    #     pprint('Nom: ' + new_player[0])
+    #     pprint('Date de naissance: ' + str(new_player[1]))
+    #     pprint('Genre: ' + new_player[2])
+    #     AskView.ask_create_player()
+    #
+    # @classmethod
+    # def show_menu(cls):
+    #     pprint("Bienvenue sur le programme de tournois d'échecs.")
+    #     print()
+    #     pprint("Que voulez vous faire?")
+    #     pprint("[1] ..Jouez/Continuer..")
+    #     pprint("[2] ..Ajoutez des joueurs..")
+    #     choice = input()
+    #     print()
+    #     return choice
 
     @classmethod
     def show_match_name(cls, tournament, matchs_list):
