@@ -2,20 +2,6 @@ from pprint import pprint
 
 
 class AskView:
-    # @classmethod
-    # def ask_create_player(cls):
-    #     valid_result = True
-    #     while valid_result:
-    #         choice = input("Ajouter des nouveau joueurs? (y ou n)")
-    #         if choice == "y":
-    #             ShowView.show_new_player()
-    #             valid_result = False
-    #         elif choice == "n":
-    #             ShowView.show_menu()
-    #         else:
-    #             pprint("Enter valid value (y/n)")
-    #     return choice
-
     @classmethod
     def ask_name(cls):
         last_name = input("Entrez nom: ")
@@ -40,9 +26,6 @@ class AskView:
 
     @classmethod
     def ask_birthday(cls):
-        # born_year = int(input('Entrer date de naissance(aaaa): '))
-        # born_month = int(input('(mm): '))
-        # born_day = int(input('(jj): '))
         born_year = input("Entrer date de naissance(aaaa): ")
         born_month = input("(mm): ")
         born_day = input("(jj): ")

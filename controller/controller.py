@@ -53,20 +53,6 @@ class Control:
         return player_dict
 
     @classmethod
-    def run_menu(cls):
-        valid_choice = True
-        while valid_choice:
-            choice = ShowView.show_menu()
-            if choice == '1':
-                cls.run_tournament()
-                valid_choice = False
-            elif choice == '2':
-                AskView.ask_create_player()
-                valid_choice = False
-            else:
-                print("Enter valid value.[1, 2 ou 3]")
-
-    @classmethod
     def run_tournament(cls):
         data_tournament, data_player = cls.load()
         tournament = ()
@@ -158,4 +144,4 @@ class Control:
         player_table = db_player.table('players')
         tournament_table = db_tournament.all()
         player_table = db_player.all()
-        return tournament_table, player_table;
+        return tournament_table, player_table
